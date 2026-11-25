@@ -935,5 +935,1103 @@ document.querySelectorAll('.tk-card').forEach(function(card){
   });
 })();
 </script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0d1b21;--paper:#ebe8d8;--muted:#8a9a9a;--line:rgba(235,232,216,.15);--acid:#b9c768;--orange:#ff6a2b;--cy:#7fd6e4;--tag:#e4382c;--mono:'IBM Plex Mono',monospace;--display:'Barlow Condensed','Arial Narrow',sans-serif}
+body{background:var(--bg)}
+#net{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.bg-anim-container,.hero:after,.contact:before,.section-id{display:none}
+header.scrolled{background:rgba(13,27,33,.92)}
+.hero h1{font-weight:600;font-size:clamp(84px,16vw,250px);line-height:.8;letter-spacing:-.005em}
+.hero h1 .outline{-webkit-text-stroke:1.5px var(--paper);transition:color .35s}
+.hero h1:hover .outline{color:var(--paper)}
+.section-top h2{font-weight:600;font-size:clamp(56px,8.4vw,124px);line-height:.88;letter-spacing:-.005em}
+.work-headline{font-weight:600;font-size:clamp(40px,6vw,84px);line-height:.98;letter-spacing:0}
+.profile-copy h3{font-weight:600;font-size:clamp(40px,5vw,70px);letter-spacing:0}
+.contact h2{font-weight:600;font-size:clamp(76px,14vw,210px);letter-spacing:-.005em}
+.ms-body h3{font-weight:600;font-size:clamp(34px,4.4vw,58px);letter-spacing:0}
+.tk-card h3,.work-card h3,.ms-btn .name,.fun-card strong,.tk-strip strong,.tk-expect strong{letter-spacing:.005em}
+.tk-card h3{font-size:25px;font-weight:600}.work-card h3{font-size:30px;font-weight:600}.ms-btn .name{font-size:clamp(22px,2.3vw,29px);font-weight:600}
+#loadNum{letter-spacing:0;font-weight:600}
+#loader{background:var(--tag);color:#f6f0df}
+.navlinks a{text-transform:capitalize;letter-spacing:.02em;font-size:13px}
+.navlinks a:not(.contact-link){position:relative;padding:6px 0}
+.navlinks a:not(.contact-link):after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--orange);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.navlinks a:not(.contact-link):hover:after{transform:scaleX(1)}
+.tk-card,.ms-btn,.ms-detail{background:rgba(8,20,25,.82)}
+.tk-card:hover,.ms-btn:hover,.ms-btn.active{background:rgba(14,32,39,.96)}
+@media(max-width:620px){.navlinks{background:#0d1b21}}
+.work-section,.profile{position:relative;color:#14201b;background-image:repeating-linear-gradient(0deg,transparent 0 35px,rgba(20,32,27,.06) 35px 36px)}
+.work-section{background-color:#d6e2cf}.profile{background-color:#d5dfe4}
+.work-section:before,.profile:before{content:"";position:absolute;left:0;right:0;top:14px;border-top:2px dashed rgba(20,32,27,.2);pointer-events:none}
+.drawing{background:#c3d0d6}
+.work-card:hover{transform:perspective(900px) translateY(-5px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));background:#1c2c31}
+.work-card:after{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:var(--orange);box-shadow:0 0 14px var(--orange);opacity:0;pointer-events:none;z-index:2}
+.work-card:hover:after{opacity:.9;animation:scan 1.6s linear infinite}
+.work-card.placeholder:after{display:none}
+@keyframes scan{to{top:calc(100% - 2px)}}
+/* shipping-label barcode on every capability card */
+.tk-cta span{order:0}.tk-cta i{order:2}
+.tk-cta:before{content:"";order:1;flex:1;height:14px;margin:0 14px;opacity:.5;background:repeating-linear-gradient(90deg,currentColor 0 1px,transparent 1px 3px,currentColor 3px 5px,transparent 5px 6px,currentColor 6px 7px,transparent 7px 10px)}
+/* reticle */
+.ret{display:none}
+@media(pointer:fine){
+.ret{display:block;position:fixed;left:0;top:0;width:34px;height:34px;margin:-17px 0 0 -17px;border:1px solid rgba(185,199,104,.8);border-radius:50%;pointer-events:none;z-index:3000;transition:width .25s,height .25s,margin .25s,border-color .25s,background .25s}
+.ret:before{content:"";position:absolute;left:50%;top:50%;width:3px;height:3px;margin:-1.5px;background:var(--acid);border-radius:50%;transition:opacity .2s}
+.ret b{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font:500 11px var(--mono);color:var(--orange);opacity:0;transition:opacity .2s}
+.ret.hot{width:68px;height:68px;margin:-34px 0 0 -34px;border-color:var(--orange);background:rgba(255,106,43,.1)}
+.ret.hot:before{opacity:0}.ret.hot b{opacity:1}}
+/* hero dock: departures board (ops) + terminal (dev) */
+.dock{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;margin-top:46px;align-items:stretch}
+@media(max-width:900px){.dock{grid-template-columns:1fr}}
+.board{border:1px solid var(--line);background:rgba(8,20,25,.78);font:12px var(--mono);animation:boardIn .9s 1.7s cubic-bezier(.2,.8,.2,1) both}
+@keyframes boardIn{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+.board-head{display:flex;justify-content:space-between;padding:11px 16px;border-bottom:1px solid var(--line);color:var(--acid)}
+.board .row{position:relative;overflow:hidden;display:grid;grid-template-columns:70px 1fr 40px 96px;gap:12px;align-items:center;width:100%;padding:13px 16px;background:none;border:0;border-bottom:1px solid rgba(235,232,216,.08);color:var(--paper);text-align:left;cursor:pointer;transition:background .25s,padding .25s}
+.board .row:last-child{border-bottom:0}
+.board .row b{color:var(--acid);font-weight:500;letter-spacing:.08em}
+.board .row span{color:#c3c8bb}.board .row i{font-style:normal;color:#6f8084}
+.board .row em{font-style:normal;text-align:right;letter-spacing:.1em;font-size:11px}
+.board .row:before{content:"\2708\FE0E";position:absolute;left:-26px;top:50%;margin-top:-9px;color:var(--orange);transition:left .3s}
+.board .row:hover,.board .row:focus-visible{background:rgba(185,199,104,.1);padding-left:30px;outline:none}
+.board .row:hover:before,.board .row:focus-visible:before{left:9px}
+.board .row:hover em,.board .row:focus-visible em{color:var(--orange)}
+.term{border:1px solid rgba(127,214,228,.35);background:rgba(6,16,20,.88);font:12px/1.85 var(--mono);color:#c3ccc8;animation:boardIn .9s 1.9s cubic-bezier(.2,.8,.2,1) both}
+.term-bar{display:flex;gap:6px;align-items:center;padding:10px 14px;border-bottom:1px solid rgba(127,214,228,.2);color:#6f8c92;font-size:11px}
+.term-bar i{width:9px;height:9px;border-radius:50%;background:#2b4650}.term-bar span{margin-left:8px}
+.term-body{padding:14px 16px;min-height:236px}
+.term .ln{display:block;padding:0 6px;margin:0 -6px;opacity:0;transform:translateX(-6px);transition:opacity .35s,transform .35s,background .2s}
+.term .ln.on{opacity:1;transform:none}
+.term .ln[data-n]:hover{background:rgba(127,214,228,.14)}
+.term .p{color:var(--orange)}.term .k{color:var(--cy)}.term .g{color:var(--acid)}
+.term-body:after{content:"";display:inline-block;width:7px;height:13px;background:var(--cy);vertical-align:-2px;animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+@media(max-width:620px){.board .row{grid-template-columns:58px 1fr 84px;gap:10px}.board .row i{display:none}.hero h1{font-size:clamp(70px,19vw,120px)}}
+/* conveyor belt: ops crates (square) and dev crates (rounded) ride the same line */
+.belt{position:relative;z-index:1;overflow:hidden;border-bottom:1px solid var(--line);background:rgba(6,16,20,.72);padding:20px 0 34px}
+.belt:before{content:"";position:absolute;left:0;right:0;bottom:16px;height:3px;background:repeating-linear-gradient(90deg,rgba(235,232,216,.28) 0 10px,transparent 10px 20px)}
+.belt-track{display:flex;gap:16px;width:max-content;animation:belt 55s linear infinite}
+.belt:hover .belt-track{animation-play-state:paused}
+@keyframes belt{to{transform:translateX(-50%)}}
+.crate{display:flex;align-items:center;gap:10px;padding:10px 16px;border:1px solid;font:500 12px var(--mono);cursor:pointer;background:rgba(13,27,33,.92);transition:transform .25s,background .25s}
+.crate b{font-weight:500;opacity:.65}
+.crate.o{border-color:rgba(255,106,43,.65);color:#ffb08f}
+.crate.d{border-color:rgba(127,214,228,.65);color:#a9e8f1;border-radius:22px}
+.crate:hover{transform:translateY(-7px);background:rgba(255,255,255,.08)}
+@media(prefers-reduced-motion:reduce){.belt-track{animation:none}}
+/* flight-path rail: a plane follows your scroll between sections */
+.rail2{display:none;position:fixed;right:20px;top:50%;transform:translateY(-50%);height:48vh;width:30px;z-index:80}
+@media(min-width:1100px){.rail2{display:block}}
+.rail2:before{content:"";position:absolute;left:14px;top:0;bottom:0;border-left:1px dashed rgba(138,154,154,.6)}
+.rail2 a{position:absolute;left:8px;width:13px;height:13px;margin-top:-6px;border:1px solid rgba(138,154,154,.9);background:var(--bg);border-radius:50%;transition:background .25s,transform .25s,border-color .25s}
+.rail2 a:hover{background:var(--orange);border-color:var(--orange);transform:scale(1.4)}
+.rail2 a span{position:absolute;right:24px;top:-2px;padding:1px 8px;font:11px var(--mono);color:var(--paper);background:var(--bg);opacity:0;white-space:nowrap;pointer-events:none;transition:opacity .2s}
+.rail2 a:hover span{opacity:1}
+.rail2 .jet{position:absolute;left:7px;top:0;margin-top:-9px;font-size:16px;line-height:1;color:var(--orange);transform:rotate(135deg);pointer-events:none}
+</style>
+
+<script>
+(function(){
+const fine=matchMedia('(pointer:fine)').matches,still=matchMedia('(prefers-reduced-motion:reduce)').matches;
+const $=s=>document.querySelector(s);
+document.querySelectorAll('#net,.ret,.dock,.belt,.rail2').forEach(e=>e.remove());
+const lc=$('#loadCaption');if(lc)lc.innerHTML='REMOVE BEFORE FLIGHT<br>PRE-FLIGHT CHECK 001';
+document.querySelectorAll('.navlinks a').forEach(a=>{a.textContent=a.textContent.replace(/^\d+\s*/,'').toLowerCase()});
+const old=$('.bg-anim-container');if(old)old.remove();
+window.__hot=[];
+const hot=s=>{window.__hot=s?s.split(','):[]};
+
+/* ===== 1. NETWORK BACKGROUND ===== */
+const cv=document.createElement('canvas');cv.id='net';cv.setAttribute('aria-hidden','true');document.body.prepend(cv);
+const ctx=cv.getContext('2d'),MONO='"IBM Plex Mono",monospace',PAPER='235,232,216';
+const K={0:'255,106,43',1:'127,214,228',2:'185,199,104'};
+let W,H,tx,ty,mx,my,act=!fine,hv=-1;
+const N=[
+ ['ALX','Home base, Philippines',2,.52,.58],['MRO','Aircraft base and line maintenance',0,.10,.22],
+ ['TLR','Toolroom and tool issuance',0,.07,.52],['INV','Inventory assistance',0,.18,.80],
+ ['SCM','Supply chain and logistics',0,.30,.38],['MFG','Manufacturing support',0,.33,.86],
+ ['SAF','Safety-first procedures',0,.22,.06],['DOC','Records and documentation',0,.40,.62],
+ ['LLM','Prompt engineering',1,.90,.18],['API','App integration',1,.70,.34],
+ ['GIT','GitHub and version control',1,.93,.50],['UI','Front-end and interface',1,.78,.72],
+ ['QA','Feature testing',1,.64,.90],['DEP','Deployment on Vercel and Firebase',1,.60,.10]
+].map((n,i)=>({c:n[0],l:n[1],g:n[2],x:n[3],y:n[4],d:.4+(i*7%10)/8}));
+const T=[
+ ['await tracker.dispatch(cargo)',.62,.24,1],['if (stock.low) reorder(sku)',.73,.54,1],['git push origin main',.79,.84,1],
+ ['npm run build && deploy',.52,.78,1],['const ok = qa.assert(manifest)',.82,.36,1],['<Route path="/billguard" />',.66,.64,1],
+ ['AWB 618-4471 2093  12 pcs  148 kg',.05,.38,0],['TOOL 0042 issued 08:14, returned 16:02',.12,.68,0],
+ ['P/N 2231-A  qty 24  bin C3',.22,.22,0],['TASK CARD 32-11-01 signed off',.24,.95,0],['ULD AKE 04417 loaded, gate 7',.04,.90,0]
+];
+const G=['{ }','</>','=>','fn()','0x1F','[ ]','async'];
+const E=[],has=(a,b)=>E.some(e=>(e.a===a&&e.b===b)||(e.a===b&&e.b===a));
+function link(a,b){if(a===b||has(a,b))return;const ga=N[a].g,gb=N[b].g;
+ E.push({a,b,gl:G[E.length%G.length],k:E.length%2?.16:-.16,v:.00003+Math.random()*.00003,o:Math.random(),t:ga===gb?(ga?'data':'cargo'):'plane'})}
+N.forEach((n,i)=>N.map((m,j)=>[j,Math.hypot(n.x-m.x,(n.y-m.y)*.6)]).filter(p=>p[0]!==i).sort((p,q)=>p[1]-q[1]).slice(0,2).forEach(p=>link(i,p[0])));
+[[1,8],[4,9],[3,12],[2,10],[5,11]].forEach(p=>link(p[0],p[1]));
+const P=[[11,0],[3,-1.6],[-2,-9],[-4.5,-9],[-3.2,-1.8],[-8,-1.2],[-9,-3.8],[-10.8,-3.8],[-10,0]];
+function plane(x,y,a,s,al){ctx.save();ctx.translate(x,y);ctx.rotate(a);ctx.scale(s,s);ctx.beginPath();
+ P.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));
+ for(let i=P.length-2;i>0;i--)ctx.lineTo(P[i][0],-P[i][1]);
+ ctx.closePath();ctx.fillStyle='rgba('+PAPER+','+al+')';ctx.fill();ctx.restore()}
+const bz=(A,C,B,t)=>[(1-t)*(1-t)*A.x+2*(1-t)*t*C.x+t*t*B.x,(1-t)*(1-t)*A.y+2*(1-t)*t*C.y+t*t*B.y];
+function chip(p,n){ctx.font='500 11px '+MONO;const w1=ctx.measureText(n.c).width,w=w1+ctx.measureText(n.l).width+34;
+ let x=p.x+16,y=p.y-36;if(x+w>W-10)x=p.x-16-w;if(y<76)y=p.y+16;
+ ctx.fillStyle='rgba(8,20,25,.95)';ctx.fillRect(x,y,w,26);ctx.strokeStyle='rgba('+K[n.g]+',.85)';ctx.strokeRect(x+.5,y+.5,w,26);
+ ctx.fillStyle='rgb('+K[n.g]+')';ctx.fillText(n.c,x+11,y+17);ctx.fillStyle='rgb('+PAPER+')';ctx.fillText(n.l,x+w1+23,y+17)}
+function draw(ts){
+ ctx.clearRect(0,0,W,H);
+ if(!fine&&!still){tx=W/2+Math.sin(ts/2600)*W*.38;ty=H/2+Math.cos(ts/3300)*H*.3}
+ mx+=(tx-mx)*.12;my+=(ty-my)*.12;
+ const sy=scrollY,hs=window.__hot,H1=i=>hs.indexOf(N[i].c)>-1;
+ ctx.lineWidth=1;ctx.strokeStyle='rgba('+PAPER+',.045)';
+ for(let i=1;i<=4;i++){ctx.beginPath();ctx.ellipse(W/2,H*.5,W*.14*i,H*.62,0,0,6.283);ctx.stroke()}
+ [.3,.7].forEach(f=>{ctx.beginPath();ctx.moveTo(0,H*f);ctx.quadraticCurveTo(W/2,H*f+H*.07*(f<.5?1:-1),W,H*f);ctx.stroke()});
+ ctx.strokeStyle='rgba('+PAPER+',.07)';ctx.beginPath();
+ for(let x=60;x<W;x+=120)for(let y=60-(sy*.1%120);y<H;y+=120){ctx.moveTo(x-4,y);ctx.lineTo(x+4,y);ctx.moveTo(x,y-4);ctx.lineTo(x,y+4)}
+ ctx.stroke();
+ const pts=N.map(n=>({x:n.x*W+(mx-W/2)*-.03*n.d,y:n.y*H+(my-H/2)*-.03*n.d-sy*.04*n.d}));
+ hv=-1;let bd=130;if(act)pts.forEach((p,i)=>{const d=Math.hypot(p.x-mx,p.y-my);if(d<bd){bd=d;hv=i}});
+ ctx.font='400 11px '+MONO;
+ T.forEach((t,i)=>{const x=t[1]*W,y=t[2]*H+Math.sin(ts/4000+i)*6-sy*.03,d=act?Math.hypot(x+80-mx,y-my):999;
+  ctx.fillStyle='rgba('+K[t[3]]+','+(.06+.75*Math.pow(Math.max(0,1-d/200),1.5))+')';ctx.fillText(t[0],x,y)});
+ E.forEach(e=>{
+  const A=pts[e.a],B=pts[e.b],dx=B.x-A.x,dy=B.y-A.y,C={x:(A.x+B.x)/2-dy*e.k,y:(A.y+B.y)/2+dx*e.k};
+  const hot=(hv>=0&&(e.a===hv||e.b===hv))||H1(e.a)||H1(e.b),col=e.t==='plane'?PAPER:K[e.t==='data'?1:0];
+  ctx.strokeStyle='rgba('+col+','+(hot?.75:.17)+')';ctx.lineWidth=hot?1.5:1;
+  ctx.setLineDash(e.t==='plane'?[3,7]:e.t==='cargo'?[10,4]:[]);
+  ctx.beginPath();ctx.moveTo(A.x,A.y);ctx.quadraticCurveTo(C.x,C.y,B.x,B.y);ctx.stroke();ctx.setLineDash([]);
+  const t=(e.o+ts*e.v)%1,q=bz(A,C,B,t),q2=bz(A,C,B,t+.01),a=Math.atan2(q2[1]-q[1],q2[0]-q[0]),
+   near=hot?.7:(act?Math.max(0,1-Math.hypot(q[0]-mx,q[1]-my)/200):0);
+  if(e.t==='plane'){const tl=bz(A,C,B,Math.max(t-.06,0));ctx.strokeStyle='rgba('+PAPER+',.25)';ctx.beginPath();ctx.moveTo(tl[0],tl[1]);ctx.lineTo(q[0],q[1]);ctx.stroke();plane(q[0],q[1],a,.9+near*.7,.75+near*.25)}
+  else if(e.t==='cargo'){ctx.save();ctx.translate(q[0],q[1]);ctx.rotate(a);ctx.scale(1+near*.6,1+near*.6);ctx.fillStyle='rgba(255,106,43,.9)';ctx.fillRect(-5,-3,10,6);ctx.fillStyle='rgba(8,20,25,.55)';ctx.fillRect(-1,-3,1,6);ctx.fillRect(2,-3,1,6);ctx.restore()}
+  else{ctx.font='500 '+(10+near*3)+'px '+MONO;ctx.textAlign='center';ctx.fillStyle='rgba(127,214,228,'+(.55+near*.45)+')';ctx.fillText(e.gl,q[0],q[1]+3);ctx.textAlign='left'}
+ });
+ pts.forEach((p,i)=>{
+  const n=N[i],d=Math.hypot(p.x-mx,p.y-my),nr=H1(i)?1:(act?Math.max(0,1-d/230):0),r=(n.g===2?6:3.6)+nr*5+(i===hv?3:0);
+  ctx.fillStyle='rgba('+K[n.g]+','+(.55+nr*.45)+')';ctx.beginPath();
+  if(n.g===0)ctx.rect(p.x-r,p.y-r,r*2,r*2);else ctx.arc(p.x,p.y,r,0,6.283);ctx.fill();
+  if(n.g===2){const ph=(ts/30)%40;ctx.strokeStyle='rgba('+K[2]+','+.4*(1-ph/40)+')';ctx.beginPath();ctx.arc(p.x,p.y,r+ph,0,6.283);ctx.stroke()}
+  if(n.c==='MFG'){ctx.setLineDash([3,4]);ctx.lineDashOffset=-ts/80;ctx.strokeStyle='rgba(255,106,43,.6)';ctx.beginPath();ctx.arc(p.x,p.y,r+8,0,6.283);ctx.stroke();ctx.setLineDash([])}
+  ctx.font='500 10px '+MONO;ctx.fillStyle='rgba('+K[n.g]+','+(.3+nr*.7)+')';ctx.fillText(n.c,p.x+r+6,p.y+3.5)});
+ if(act){
+  const g=ctx.createRadialGradient(mx,my,0,mx,my,220);g.addColorStop(0,'rgba(185,199,104,.11)');g.addColorStop(1,'rgba(185,199,104,0)');
+  ctx.fillStyle=g;ctx.fillRect(mx-220,my-220,440,440);
+  const ph=(ts/1800)%1;ctx.strokeStyle='rgba(185,199,104,'+.3*(1-ph)+')';ctx.beginPath();ctx.arc(mx,my,ph*150,0,6.283);ctx.stroke();
+  if(hv>=0)chip(pts[hv],N[hv]);
+ }
+}
+function rs(){const D=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=W*D;cv.height=H*D;ctx.setTransform(D,0,0,D,0,0);
+ if(tx==null){tx=mx=W/2;ty=my=H/2}if(still)draw(0)}
+rs();addEventListener('resize',rs);
+if(fine){addEventListener('mousemove',e=>{act=true;tx=e.clientX;ty=e.clientY});document.addEventListener('mouseleave',()=>{act=false})}
+if(!still)(function loop(ts){draw(ts);requestAnimationFrame(loop)})(0);
+
+/* ===== 2. RETICLE CURSOR ===== */
+const HOT='a,button,.gallery-item,.work-card,.tk-card,.ms-btn,.board .row,.crate,.term .ln[data-n]';
+if(fine){
+ const r=document.createElement('div');r.className='ret';r.innerHTML='<b></b>';document.body.appendChild(r);
+ let x=-100,y=-100,px=-100,py=-100;r.style.transform='translate3d(-100px,-100px,0)';
+ addEventListener('mousemove',e=>{px=e.clientX;py=e.clientY;
+  const h=e.target.closest&&e.target.closest(HOT);r.classList.toggle('hot',!!h);
+  if(h)r.firstChild.textContent=h.closest('.gallery-item')?'view':h.closest('.ms-btn,.board .row')?'select':h.closest('.crate,.term')?'trace':(h.href||'').indexOf('mailto')===0?'send':'open'});
+ (function f(){x+=(px-x)*.2;y+=(py-y)*.2;r.style.transform='translate3d('+x+'px,'+y+'px,0)';requestAnimationFrame(f)})();
+}
+
+/* ===== 3. HERO DOCK: departures board (ops) + terminal (dev) ===== */
+const HM=['DOC,SCM','LLM,DOC','LLM,API,GIT,UI,DEP','QA,DEP,UI','MRO,TLR,INV,SCM,MFG'];
+const hb=$('.hero-inner .hero-bottom');
+if(hb){
+ const R=[['VA 101','Administrative and virtual assistance','A1','ON TIME'],['AI 202','AI and digital productivity','B2','BOARDING'],
+  ['DV 303','AI engineering and dev support','C3','BUILDING'],['TS 404','Technical and application support','D4','CLEARED'],
+  ['OP 505','Operations, inventory and coordination','E5','LOADING']];
+ const dock=document.createElement('div');dock.className='dock';
+ dock.innerHTML='<div class="board" aria-label="Areas I support"><div class="board-head"><span>Departures</span><span id="bClock"></span></div>'+
+  R.map((r,i)=>'<button class="row"><b>'+r[0]+'</b><span>'+r[1]+'</span><i>'+r[2]+'</i><em>'+r[3]+'</em></button>').join('')+'</div>'+
+  '<div class="term" aria-label="Developer terminal"><div class="term-bar"><i></i><i></i><i></i><span>billguard.vespoint.js</span></div><div class="term-body" id="termBody"></div></div>';
+ hb.insertAdjacentElement('afterend',dock);
+ const ch='ABCDEFGHJKLMNPRSTUVWXYZ0123456789';
+ const scr=(el,to)=>{clearInterval(el._t);let k=0;el._t=setInterval(()=>{el.textContent=[...to].map((c,i)=>i<k||c===' '?c:ch[Math.random()*ch.length|0]).join('');if(++k>to.length)clearInterval(el._t)},34)};
+ dock.querySelectorAll('.row').forEach((row,i)=>{const em=row.querySelector('em');
+  ['mouseenter','focus'].forEach(v=>row.addEventListener(v,()=>{scr(em,'SEE AREA');hot(HM[i])}));
+  ['mouseleave','blur'].forEach(v=>row.addEventListener(v,()=>{scr(em,R[i][3]);hot('')}));
+  row.addEventListener('click',()=>{const m=$('.ms-btn[data-mission="'+i+'"]');if(m)m.click();$('#missions').scrollIntoView({behavior:'smooth'})})});
+ const clk=()=>{$('#bClock').textContent='Manila '+new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Manila',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date())};
+ clk();setInterval(clk,15000);
+ const L=[['<span class="p">$</span> whoami','ALX'],['<span class="k">camille "alex" millet</span>, aeronautical engineer','ALX,MRO'],
+  ['<span class="p">$</span> ops --list','MRO,TLR,INV,SCM,MFG,SAF,DOC'],['mro, toolroom, inventory, supply chain, manufacturing','MRO,TLR,INV,SCM,MFG'],
+  ['<span class="p">$</span> dev --list','LLM,API,GIT,UI,QA,DEP'],['prompting, api integration, git, ui, testing, deploy','LLM,API,GIT,UI,QA,DEP'],
+  ['<span class="p">$</span> ship billguard vespoint','DEP,API,UI'],['<span class="g">ok</span> both live on vercel and firebase','DEP']];
+ const tb=$('#termBody');
+ L.forEach(l=>{const s=document.createElement('span');s.className='ln';s.dataset.n=l[1];s.innerHTML=l[0];
+  s.addEventListener('mouseenter',()=>hot(l[1]));s.addEventListener('mouseleave',()=>hot(''));tb.appendChild(s)});
+ tb.querySelectorAll('.ln').forEach((s,i)=>setTimeout(()=>s.classList.add('on'),still?0:2300+i*420));
+}
+
+/* ===== 4. CONVEYOR BELT under the hero ===== */
+const C=[['MRO','Aircraft maintenance','o'],['LLM','Prompt engineering','d'],['INV','Inventory','o'],['API','App integration','d'],
+ ['TLR','Toolroom','o'],['GIT','GitHub','d'],['SCM','Supply chain','o'],['UI','Front-end','d'],['MFG','Manufacturing','o'],
+ ['QA','Feature testing','d'],['DOC','Documentation','o'],['DEP','Deployment','d']];
+const home=$('#home');
+if(home){
+ const belt=document.createElement('div');belt.className='belt';belt.setAttribute('aria-hidden','true');
+ const items=C.concat(C).map(c=>'<div class="crate '+c[2]+'" data-c="'+c[0]+'"><b>'+c[0]+'</b>'+c[1]+'</div>').join('');
+ belt.innerHTML='<div class="belt-track">'+items+'</div>';
+ home.insertAdjacentElement('afterend',belt);
+ belt.querySelectorAll('.crate').forEach(c=>{c.addEventListener('mouseenter',()=>hot(c.dataset.c));c.addEventListener('mouseleave',()=>hot(''))});
+}
+
+/* ===== 5. FLIGHT-PATH RAIL: plane follows scroll ===== */
+const S=[['home','Index'],['work','Workshop'],['gallery','Gallery'],['capabilities','Toolkit'],['about','About'],['missions','Work with me'],['contact','Contact']];
+const rail=document.createElement('div');rail.className='rail2';
+rail.innerHTML=S.map((s,i)=>'<a href="#'+s[0]+'" style="top:'+(i/(S.length-1)*100)+'%"><span>'+s[1]+'</span></a>').join('')+'<div class="jet">&#9992;&#xFE0E;</div>';
+document.body.appendChild(rail);
+const jet=rail.querySelector('.jet');
+function pr(){const m=document.documentElement.scrollHeight-innerHeight;jet.style.top=(m>0?scrollY/m*100:0)+'%'}
+addEventListener('scroll',pr,{passive:true});addEventListener('resize',pr);pr();
+
+/* ===== 6. HOVER LINKS: capability cards light up the network; project cards tilt ===== */
+document.querySelectorAll('.tk-card').forEach((c,i)=>{c.addEventListener('mouseenter',()=>hot(HM[i]||''));c.addEventListener('mouseleave',()=>hot(''))});
+document.querySelectorAll('.work-card:not(.placeholder)').forEach(c=>{
+ c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect();
+  c.style.setProperty('--ry',((e.clientX-r.left)/r.width-.5)*8+'deg');c.style.setProperty('--rx',-((e.clientY-r.top)/r.height-.5)*8+'deg')});
+ c.addEventListener('mouseleave',()=>{c.style.setProperty('--rx','0deg');c.style.setProperty('--ry','0deg')});
+});
+})();
+</script>
+<!-- ===== ADD-ON V2: replaces the previous add-on =====
+ 1. Delete the old block (from "PASTE THIS WHOLE BLOCK" to "END ADD-ON").
+ 2. Paste this whole file right before </body>
+<style>
+/* ---------- page-5 hub illustration ---------- */
+#funScene .item{transform-origin:center}
+#funScene .hs:hover .item,#funScene .hs.on .item,#funScene .hs:focus-visible .item{transform:translateY(-4px) scale(1.03)}
+.hspin{transform-box:fill-box;transform-origin:center;animation:hSpin 7s linear infinite}
+@keyframes hSpin{to{transform:rotate(360deg)}}
+.hdash{animation:hDash 1s linear infinite}
+@keyframes hDash{to{stroke-dashoffset:-18}}
+.hblk{animation:blink 1s steps(2) infinite}
+
+/* ---------- workbench (professional tabbed console) ---------- */
+.pro{border:1px solid var(--line);background:rgba(8,20,25,.9)}
+.pro-top{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:12px 20px;border-bottom:1px solid var(--line);font:11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.pro-ok{display:inline-flex;align-items:center;gap:8px;color:var(--acid)}
+.pro-ok i{width:7px;height:7px;border-radius:50%;background:var(--acid);box-shadow:0 0 10px var(--acid)}
+.pro-main{display:grid;grid-template-columns:250px 1fr}
+.pro-nav{display:flex;flex-direction:column;border-right:1px solid var(--line)}
+.pro-nav button{display:block;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);border-left:2px solid transparent;padding:20px 22px;color:#8a9a9a;cursor:pointer;transition:background .25s,border-color .25s,color .25s}
+.pro-nav button:last-child{border-bottom:0}
+.pro-nav b{display:block;font:600 24px var(--display);letter-spacing:.01em;color:inherit}
+.pro-nav small{display:block;margin-top:4px;font:10px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:#6f8084}
+.pro-nav button:hover,.pro-nav button.on{background:rgba(185,199,104,.07);color:var(--paper);border-left-color:var(--acid)}
+.pro-screen{padding:22px;min-height:420px;min-width:0}
+.pro-pane{display:none}.pro-pane.on{display:block;animation:fadeIn .4s ease}
+.pro-foot{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:18px 22px;border-top:1px solid var(--line)}
+.pro-foot p{margin:0;max-width:560px;font-size:13px;line-height:1.7;color:#a0a298}
+.pro-foot ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end}
+.pro-foot li{border:1px solid var(--line);padding:6px 9px;font:9px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:#aeb0a5}
+/* cockpit */
+.cockpit{border:1px solid var(--line);background:#050b0d}
+.cockpit svg{display:block;width:100%}
+.cockpit text{font:500 7.5px var(--mono);fill:#ebe8d8;letter-spacing:.04em}
+.cockpit .tg{fill:#b9c768}.cockpit .tm{fill:#e56bd0}.cockpit .to{fill:#ff6a2b}.cockpit .tc{fill:#7fd6e4}
+.roll{transform-box:view-box;transform-origin:130px 223px;animation:rollA 8s ease-in-out infinite}
+.roll2{transform-box:view-box;transform-origin:320px 76px;animation:rollB 8s ease-in-out infinite}
+@keyframes rollA{0%,100%{transform:rotate(-5deg) translateY(2px)}50%{transform:rotate(5deg) translateY(-2px)}}
+@keyframes rollB{0%,100%{transform:rotate(1.4deg)}50%{transform:rotate(-1.4deg)}}
+/* web + ai boxes */
+.two{display:grid;grid-template-columns:1.15fr 1fr;gap:14px}
+.box{border:1px solid var(--line);background:rgba(4,9,11,.85);font:12px/1.9 var(--mono);color:#c3ccc8;min-width:0}
+.box-h{display:flex;justify-content:space-between;padding:9px 14px;border-bottom:1px solid var(--line);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.box-b{padding:14px 16px;overflow-x:auto}
+.box a{color:var(--cy);text-decoration:underline;text-underline-offset:3px}
+.k{color:var(--cy)}.s{color:var(--orange)}.g{color:var(--acid)}.d{color:#6f8084}
+.pro-pane .ln{display:block;white-space:pre;opacity:0}
+.pro-pane.on .ln{animation:lnIn .45s both;animation-delay:calc(var(--i,0)*.28s)}
+@keyframes lnIn{from{opacity:0;transform:translateX(-6px)}to{opacity:1;transform:none}}
+.kp{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+.kp div{border:1px solid var(--line);padding:12px 14px;font:10px/1.5 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:#6f8084}
+.kp b{display:block;margin-top:4px;font:600 19px var(--display);letter-spacing:.01em;text-transform:none;color:var(--paper)}
+/* ai stepper */
+.stps{display:flex;margin-bottom:14px;border:1px solid var(--line)}
+.stp{flex:1;padding:14px 16px;border-right:1px solid var(--line);color:#6f8084;transition:color .3s,background .3s}
+.stp:last-child{border-right:0}
+.stp i{display:inline-grid;place-items:center;width:20px;height:20px;margin-bottom:8px;border:1px solid currentColor;border-radius:50%;font:500 10px var(--mono);font-style:normal}
+.stp b{display:block;font:600 19px var(--display);letter-spacing:.01em}
+.stp small{display:block;margin-top:3px;font:10px/1.5 var(--mono);color:#6f8084}
+.stp.now{color:var(--orange);background:rgba(255,106,43,.07)}.stp.now b{color:var(--paper)}
+.stp.done{color:var(--acid)}.stp.done b{color:#c9d6a0}
+/* supply chain */
+.route{position:relative;display:flex;margin-bottom:16px;padding-bottom:4px}
+.route:before{content:"";position:absolute;left:10%;right:10%;top:15px;border-top:1px dashed rgba(138,154,154,.6)}
+.route:after{content:"\2708\FE0E";position:absolute;top:5px;left:10%;margin-left:-8px;color:var(--orange);font-size:16px;line-height:1;transform:rotate(45deg);animation:rtMove 9s linear infinite}
+@keyframes rtMove{from{left:10%}to{left:90%}}
+.rs{position:relative;z-index:1;flex:1;text-align:center}
+.rs i{display:block;width:11px;height:11px;margin:10px auto;border:2px solid var(--acid);border-radius:50%;background:var(--bg)}
+.rs b{display:block;font:600 18px var(--display);letter-spacing:.01em}
+.rs small{font:10px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:#6f8084}
+.tr{display:grid;grid-template-columns:1.1fr 1.6fr 1fr 96px;gap:12px;padding:10px 16px;border-bottom:1px solid rgba(235,232,216,.08);font:12px var(--mono);color:#c3ccc8}
+.tr:last-child{border-bottom:0}
+.tr.h{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#6f8084}
+.tr em{font-style:normal;text-align:right;font-size:10px;letter-spacing:.08em}
+.tr .ok{color:var(--acid)}.tr .wn{color:var(--orange)}.tr .in{color:var(--cy)}
+@media(prefers-reduced-motion:reduce){.pro-pane .ln{opacity:1}.route:after{left:50%}}
+@media(max-width:900px){.pro-main{grid-template-columns:1fr}.pro-nav{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line)}.pro-nav button{flex:0 0 auto;width:auto;border-bottom:0;border-left:0;border-bottom:2px solid transparent;padding:16px 20px}.pro-nav button:hover,.pro-nav button.on{border-bottom-color:var(--acid)}.pro-nav small{display:none}.two{grid-template-columns:1fr}.pro-foot{flex-direction:column;align-items:flex-start}.pro-foot ul{justify-content:flex-start}}
+@media(max-width:620px){.pro-screen{padding:14px}.kp{grid-template-columns:1fr}.stps{flex-direction:column}.stp{border-right:0;border-bottom:1px solid var(--line)}.stp:last-child{border-bottom:0}.tr{grid-template-columns:1fr 1.3fr 80px}.tr span:nth-child(3){display:none}.rs small{display:none}}
+</style>
+
+<section class="content" id="workbench"><div class="wrap">
+<div class="section-top reveal"><div><h2>Aero meets<br>the console.</h2></div><p class="section-aside">One workstation for the four disciplines behind my work: flight deck, web, AI and supply chain. Select a tab to switch.</p></div>
+
+<div class="pro reveal">
+  <div class="pro-top"><span>Workstation / multi-discipline</span><span class="pro-ok"><i></i>All systems nominal</span></div>
+  <div class="pro-main">
+    <div class="pro-nav" role="tablist" aria-label="Disciplines">
+      <button class="on" role="tab" aria-selected="true"><b>Flight deck</b><small>Aeronautical engineering</small></button>
+      <button role="tab" aria-selected="false"><b>Web console</b><small>Build and deploy</small></button>
+      <button role="tab" aria-selected="false"><b>AI console</b><small>Prompt, review, test</small></button>
+      <button role="tab" aria-selected="false"><b>Supply chain</b><small>Cargo and manufacturing</small></button>
+    </div>
+    <div class="pro-screen">
+
+      <!-- 1. COCKPIT -->
+      <div class="pro-pane on"><div class="cockpit">
+<svg viewBox="0 0 640 360" role="img" aria-label="Airliner cockpit with windshield, primary flight display, engine display, navigation display and throttle levers">
+<defs>
+<linearGradient id="skyg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d2f3d"/><stop offset="1" stop-color="#4a8ba0"/></linearGradient>
+<clipPath id="ws"><rect x="0" y="0" width="640" height="118"/></clipPath>
+<clipPath id="pf"><rect x="70" y="166" width="120" height="114"/></clipPath>
+<clipPath id="nd"><rect x="416" y="160" width="184" height="142"/></clipPath>
+</defs>
+<!-- windshield -->
+<g clip-path="url(#ws)"><g class="roll2">
+<rect x="-40" y="-40" width="720" height="156" fill="url(#skyg)"/>
+<rect x="-40" y="76" width="720" height="90" fill="#1f2c1c"/>
+<path d="M300 76H340L430 118H210Z" fill="#26343a"/>
+<path d="M320 80V118" stroke="#ebe8d8" stroke-dasharray="4 6"/>
+<path d="M300 76L210 118M340 76L430 118" stroke="#ebe8d8" stroke-width="1" opacity=".45"/>
+</g></g>
+<path d="M0 0H64L34 118H0ZM576 0H640V118H606ZM300 0H340L334 118H306Z" fill="#0a1519"/>
+<!-- glareshield -->
+<path d="M0 118H640V146H0Z" fill="#101d22"/>
+<rect x="226" y="123" width="188" height="17" rx="2" fill="#050b0d" stroke="#2b4650"/>
+<text x="320" y="134.5" text-anchor="middle" class="tg">SPD 250  HDG 270  ALT 35000</text>
+<g><rect x="40" y="128" width="14" height="8" fill="#b9c768"/><rect x="60" y="128" width="14" height="8" fill="#b9c768"/><rect x="80" y="128" width="14" height="8" fill="#ff6a2b"/><rect x="546" y="128" width="14" height="8" fill="#ff6a2b"/><rect x="566" y="128" width="14" height="8" fill="#b9c768"/><rect x="586" y="128" width="14" height="8" fill="#b9c768"/></g>
+<!-- panel -->
+<rect y="146" width="640" height="214" fill="#0a1519"/>
+<path d="M0 146H640" stroke="#2b4650"/>
+<!-- PFD -->
+<rect x="34" y="154" width="196" height="154" rx="5" fill="#16262c" stroke="#2b4650"/>
+<rect x="40" y="160" width="184" height="142" fill="#04090b"/>
+<g clip-path="url(#pf)"><g class="roll">
+<rect x="0" y="100" width="260" height="123" fill="#2f7fa0"/>
+<rect x="0" y="223" width="260" height="140" fill="#7a5a2b"/>
+<path d="M0 223H260M112 203H148M120 213H140M120 233H140M112 243H148M120 193H140M120 253H140" stroke="#fff" stroke-width="1.2"/>
+</g></g>
+<path d="M92 192A40 40 0 0 1 168 192" fill="none" stroke="#fff" stroke-width="1.2"/><path d="M130 183l-4 7h8z" fill="#ff6a2b"/>
+<path d="M90 224H116V231M170 224H144V231" fill="none" stroke="#ffb020" stroke-width="2.6"/><rect x="127" y="221" width="6" height="6" fill="#ffb020"/>
+<rect x="42" y="166" width="26" height="114" fill="#0d1a1f" opacity=".92"/>
+<text x="64" y="182" text-anchor="end">270</text><text x="64" y="202" text-anchor="end">260</text><text x="64" y="248" text-anchor="end">240</text><text x="64" y="268" text-anchor="end">230</text>
+<rect x="42" y="217" width="28" height="14" fill="#000" stroke="#fff"/><text x="67" y="227.5" text-anchor="end" class="tg">250</text>
+<rect x="192" y="166" width="30" height="114" fill="#0d1a1f" opacity=".92"/>
+<text x="196" y="182">360</text><text x="196" y="202">355</text><text x="196" y="248">345</text><text x="196" y="268">340</text>
+<rect x="190" y="217" width="32" height="14" fill="#000" stroke="#fff"/><text x="194" y="227.5" class="tg">350</text>
+<rect x="70" y="282" width="120" height="16" fill="#0d1a1f"/><path d="M88 282v5M109 282v5M151 282v5M172 282v5" stroke="#fff"/><text x="130" y="294" text-anchor="middle" class="tg">270</text>
+<!-- engine display -->
+<rect x="246" y="154" width="148" height="78" rx="5" fill="#16262c" stroke="#2b4650"/><rect x="252" y="160" width="136" height="66" fill="#04090b"/>
+<path d="M264 205A24 24 0 0 1 312 205" fill="none" stroke="#2b4650" stroke-width="4"/><path d="M264 205A24 24 0 0 1 295 182" fill="none" stroke="#b9c768" stroke-width="4"/><path d="M288 205L300 187" stroke="#fff" stroke-width="1.6"/>
+<path d="M328 205A24 24 0 0 1 376 205" fill="none" stroke="#2b4650" stroke-width="4"/><path d="M328 205A24 24 0 0 1 359 182" fill="none" stroke="#b9c768" stroke-width="4"/><path d="M352 205L364 187" stroke="#fff" stroke-width="1.6"/>
+<text x="288" y="172" text-anchor="middle">N1  ENG 1</text><text x="352" y="172" text-anchor="middle">N1  ENG 2</text>
+<text x="288" y="219" text-anchor="middle" class="tg">84.2</text><text x="352" y="219" text-anchor="middle" class="tg">84.0</text>
+<rect x="246" y="238" width="148" height="70" rx="5" fill="#16262c" stroke="#2b4650"/><rect x="252" y="244" width="136" height="58" fill="#04090b"/>
+<text x="260" y="258">GEAR</text><text x="380" y="258" text-anchor="end" class="tg">DOWN</text>
+<text x="260" y="270">FLAPS</text><text x="380" y="270" text-anchor="end" class="tg">2</text>
+<text x="260" y="282">FUEL</text><text x="380" y="282" text-anchor="end" class="tg">12.4 T</text>
+<text x="260" y="294">OIL / HYD</text><text x="380" y="294" text-anchor="end" class="tg">NORM</text>
+<!-- navigation display -->
+<rect x="410" y="154" width="196" height="154" rx="5" fill="#16262c" stroke="#2b4650"/><rect x="416" y="160" width="184" height="142" fill="#04090b"/>
+<g clip-path="url(#nd)">
+<circle cx="508" cy="270" r="76" fill="none" stroke="#2b4650"/><circle cx="508" cy="270" r="76" fill="none" stroke="#6f8c92" stroke-width="6" stroke-dasharray="1 7.6"/><circle cx="508" cy="270" r="40" fill="none" stroke="#2b4650" stroke-dasharray="2 4"/>
+<circle cx="458" cy="216" r="14" fill="#b9c768" opacity=".28"/><circle cx="450" cy="226" r="8" fill="#ffb020" opacity=".35"/>
+<path class="hdash" d="M508 262V230L548 196L580 168" fill="none" stroke="#e56bd0" stroke-width="1.4" stroke-dasharray="5 4"/>
+<path d="M508 262V288M496 276H520M503 288H513" stroke="#ffb020" stroke-width="2"/>
+</g>
+<rect x="488" y="162" width="40" height="14" fill="#000" stroke="#fff"/><text x="508" y="172.5" text-anchor="middle">270°</text>
+<text x="424" y="176" class="tm">MNL</text><text x="424" y="186">42 NM</text><text x="592" y="176" text-anchor="end" class="tc">WX ON</text>
+<!-- pedestal and sticks -->
+<rect x="262" y="312" width="116" height="48" fill="#101d22" stroke="#2b4650"/>
+<rect x="295" y="318" width="10" height="38" rx="3" fill="#050b0d"/><rect x="335" y="318" width="10" height="38" rx="3" fill="#050b0d"/>
+<rect x="297" y="326" width="6" height="26" fill="#6f8c92"/><rect x="295" y="322" width="10" height="8" rx="2" fill="#ff6a2b"/>
+<rect x="337" y="326" width="6" height="26" fill="#6f8c92"/><rect x="335" y="322" width="10" height="8" rx="2" fill="#ff6a2b"/>
+<text x="320" y="345" text-anchor="middle">THR</text>
+<path d="M110 360L128 324H152L170 360Z M470 360L488 324H512L530 360Z" fill="#101d22" stroke="#2b4650"/>
+<rect x="132" y="312" width="16" height="22" rx="6" fill="#16262c" stroke="#2b4650"/><rect x="492" y="312" width="16" height="22" rx="6" fill="#16262c" stroke="#2b4650"/>
+</svg>
+      </div></div>
+
+      <!-- 2. WEB -->
+      <div class="pro-pane"><div class="two">
+        <div class="box"><div class="box-h"><span>index.html · app.js</span><span>editor</span></div><div class="box-b">
+<span class="ln"><span class="d">01</span>  <span class="k">const</span> bills = <span class="k">await</span> fetch(<span class="s">'/api/bills'</span>)</span>
+<span class="ln"><span class="d">02</span>    .then(r =&gt; r.json())</span>
+<span class="ln"><span class="d">03</span>  render(bills)</span>
+<span class="ln"><span class="d">04</span></span>
+<span class="ln"><span class="d">05</span>  <span class="g">// tested in the browser before every deploy</span></span>
+<span class="ln"><span class="d">06</span>  button.onclick = () =&gt; save(bills)</span>
+        </div></div>
+        <div class="box"><div class="box-h"><span>terminal</span><span>deploy</span></div><div class="box-b">
+<span class="ln"><span class="d">$</span> npm run build</span>
+<span class="ln"><span class="g">✓</span> compiled</span>
+<span class="ln"><span class="d">$</span> git push origin main</span>
+<span class="ln"><span class="g">✓</span> <a href="https://billguard-black.vercel.app/" target="_blank" rel="noopener">billguard</a> live on Vercel</span>
+<span class="ln"><span class="g">✓</span> <a href="https://vespoint-d6340.web.app/" target="_blank" rel="noopener">vespoint</a> live on Firebase</span>
+        </div></div>
+      </div>
+      <div class="kp"><div>Stack<b>HTML · CSS · JS</b></div><div>Source<b>GitHub</b></div><div>Release<b>Test, fix, redeploy</b></div></div></div>
+
+      <!-- 3. AI -->
+      <div class="pro-pane">
+        <div class="stps">
+          <div class="stp"><i>1</i><b>Prompt</b><small>Clear instructions</small></div>
+          <div class="stp"><i>2</i><b>Review</b><small>Read every output</small></div>
+          <div class="stp"><i>3</i><b>Test</b><small>Try real cases</small></div>
+          <div class="stp"><i>4</i><b>Document</b><small>Notes and issues</small></div>
+          <div class="stp"><i>5</i><b>Ship</b><small>Deploy and verify</small></div>
+        </div>
+        <div class="two">
+          <div class="box"><div class="box-h"><span>prompt</span><span>v3</span></div><div class="box-b">
+<span class="ln"><span class="s">&gt;</span> Build a bill reminder card.</span>
+<span class="ln"><span class="s">&gt;</span> Constraints: mobile first,</span>
+<span class="ln"><span class="s">&gt;</span> no card or e-wallet data.</span>
+<span class="ln"><span class="s">&gt;</span> Return commented HTML + JS.</span>
+          </div></div>
+          <div class="box"><div class="box-h"><span>review checklist</span><span>human</span></div><div class="box-b">
+<span class="ln"><span class="g">✓</span> logic traced by hand</span>
+<span class="ln"><span class="g">✓</span> edge cases tried</span>
+<span class="ln"><span class="g">✓</span> works on phone and desktop</span>
+<span class="ln"><span class="s">▶</span> sign-off before release</span>
+          </div></div>
+        </div>
+        <div class="kp"><div>Role<b>Pilot-in-command</b></div><div>AI<b>Co-pilot</b></div><div>Rule<b>Nothing ships untested</b></div></div>
+      </div>
+
+      <!-- 4. SUPPLY CHAIN -->
+      <div class="pro-pane">
+        <div class="route" aria-label="Shipment route">
+          <div class="rs"><i></i><b>Factory</b><small>Manufacturing</small></div>
+          <div class="rs"><i></i><b>Warehouse</b><small>Inventory</small></div>
+          <div class="rs"><i></i><b>Cargo hub</b><small>Consolidation</small></div>
+          <div class="rs"><i></i><b>Airport</b><small>Air freight</small></div>
+          <div class="rs"><i></i><b>Delivery</b><small>Last mile</small></div>
+        </div>
+        <div class="box"><div class="box-h"><span>Sample manifest</span><span>illustrative</span></div>
+          <div class="tr h"><span>Ref</span><span>Item</span><span>Location</span><em>Status</em></div>
+          <div class="tr"><span>PO-1042</span><span>Machined brackets x240</span><span>Factory line 2</span><em class="ok">PACKED</em></div>
+          <div class="tr"><span>SKU-2231</span><span>Fastener kits x24</span><span>Bin C3</span><em class="wn">LOW STOCK</em></div>
+          <div class="tr"><span>AWB 618-4471</span><span>12 pcs · 148 kg</span><span>Cargo hub</span><em class="in">LOADING</em></div>
+          <div class="tr"><span>ULD AKE-04417</span><span>Mixed freight</span><span>Gate 7</span><em class="ok">DEPARTED</em></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="pro-foot"><p id="proText"></p><ul id="proChips"></ul></div>
+</div>
+</div></section>
+
+<script>
+(function(){
+/* ===== A. clean up the previous add-on, place the workbench, fix the nav link ===== */
+var o=document.getElementById('consoles');if(o)o.remove();
+var sec=document.getElementById('workbench'),ab=document.getElementById('about');
+if(sec&&ab)ab.parentNode.insertBefore(sec,ab);
+var nav=document.getElementById('navlinks'),lk=nav&&nav.querySelector('a[href="#consoles"],a[href="#workbench"]');
+if(!lk&&nav){var na=nav.querySelector('a[href="#about"]');if(na){lk=document.createElement('a');na.parentNode.insertBefore(lk,na)}}
+if(lk){lk.href='#workbench';lk.textContent='consoles'}
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target)}})},{threshold:.1});
+sec.querySelectorAll('.reveal').forEach(function(e){io.observe(e)});
+
+/* ===== B. tabs + footer text ===== */
+var T=[
+ {t:'My aeronautical engineering degree and aircraft maintenance OJT taught me procedure-first work: read the checklist, verify, then sign off.',c:['Aircraft maintenance','Tool control','Technical documentation','Safety procedures']},
+ {t:'I build and deploy small web apps, BillGuard and Vespoint, and test every feature in the browser before it goes live.',c:['HTML · CSS · JS','GitHub','Vercel','Firebase','Testing']},
+ {t:'I brief AI tools with clear prompts, review every output line by line, and only ship what I have tested.',c:['Prompt engineering','Output review','Feature testing','Documentation']},
+ {t:'Toolroom inventory, tool issuance and record keeping carry over directly to stock control, logistics and manufacturing support.',c:['Inventory','Tool issuance','Logistics and supply chain','Manufacturing support','Records']}
+];
+var bt=sec.querySelectorAll('.pro-nav button'),pn=sec.querySelectorAll('.pro-pane'),ft=document.getElementById('proText'),fc=document.getElementById('proChips');
+pn.forEach(function(p){p.querySelectorAll('.ln').forEach(function(l,j){l.style.setProperty('--i',j)})});
+function tab(i){
+  bt.forEach(function(b,k){b.classList.toggle('on',k===i);b.setAttribute('aria-selected',String(k===i))});
+  pn.forEach(function(p,k){p.classList.toggle('on',k===i)});
+  ft.textContent=T[i].t;fc.innerHTML=T[i].c.map(function(x){return '<li>'+x+'</li>'}).join('');
+}
+bt.forEach(function(b,i){b.addEventListener('click',function(){tab(i)})});
+tab(0);
+
+/* ===== C. AI stepper ===== */
+var st=sec.querySelectorAll('.stp'),n=0,still=matchMedia('(prefers-reduced-motion:reduce)').matches;
+function paint(){st.forEach(function(s,k){s.className='stp'+(k<n?' done':k===n?' now':'');s.querySelector('i').textContent=k<n?'✓':k+1})}
+if(still){n=st.length;paint()}else{paint();setInterval(function(){n=(n+1)%(st.length+2);paint()},1400)}
+
+/* ===== D. page-5 illustration: cargo hub (hangar, warehouse, web console, AI chip, tower) ===== */
+var old=document.getElementById('funScene');
+if(old){
+var P=function(x,y){return '<g class="pin" transform="translate('+x+' '+y+')"><circle class="ring" r="11" fill="none" stroke="#d5ff3f"/><circle class="dotc" r="9" fill="#d5ff3f"/><path d="M-4 0H4M0 -4V4"/></g>'};
+old.outerHTML=`<svg id="funScene" viewBox="0 0 500 330" role="group" aria-label="Interactive cargo hub illustration. Select a building or device to learn about me.">
+<g stroke="#252820" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<path d="M30 128Q140 14 280 44T480 22" fill="none" stroke="#77834c" stroke-width="1.5" stroke-dasharray="4 6"/>
+<path d="M12 0L-12-8L-6 0L-12 8Z" fill="#ff754a"><animateMotion dur="9s" repeatCount="indefinite" rotate="auto" path="M30 128Q140 14 280 44T480 22"/></path>
+<rect x="10" y="262" width="480" height="14" fill="#aeb4a1"/>
+<path class="hdash" d="M16 269H484" stroke="#e7e5d9" stroke-dasharray="10 8"/>
+<g><animateTransform attributeName="transform" type="translate" from="-90 0" to="520 0" dur="16s" repeatCount="indefinite"/>
+<rect x="0" y="244" width="46" height="22" fill="#ff754a"/><path d="M46 266V250H62L72 258V266Z" fill="#e7e5d9"/><circle cx="12" cy="268" r="5" fill="#252820"/><circle cx="34" cy="268" r="5" fill="#252820"/><circle cx="62" cy="268" r="5" fill="#252820"/></g>
+
+<g class="hs" data-i="0" tabindex="0" role="button" aria-label="Hangar: aeronautical engineering">
+<rect class="hit" x="18" y="140" width="152" height="124" fill="transparent"/>
+<g class="item">
+<path d="M22 262V198Q94 140 166 198V262Z" fill="#e7e5d9"/><path d="M42 262V210Q94 176 146 210V262Z" fill="#3b4339"/>
+<g class="bob"><path d="M54 244H132Q146 244 150 250Q146 256 132 256H58Q52 252 54 244Z" fill="#f2f0e6" stroke-width="1.6"/><path d="M58 244L50 226H66L78 244Z" fill="#ff754a" stroke-width="1.6"/><path d="M90 252H108L100 260H86Z" fill="#e7e5d9" stroke-width="1.6"/><path d="M104 248h22" stroke-width="1.6" stroke-dasharray="2 3"/></g>
+</g>${P(94,150)}</g>
+
+<g class="hs" data-i="2" tabindex="0" role="button" aria-label="Warehouse: toolroom, inventory and manufacturing support">
+<rect class="hit" x="176" y="164" width="150" height="100" fill="transparent"/>
+<g class="item">
+<rect x="184" y="200" width="132" height="62" fill="#d4d8c4"/><path d="M178 200L250 170L322 200Z" fill="#aeb4a1"/>
+<circle class="hspin" cx="250" cy="190" r="12" fill="none" stroke-width="5" stroke-dasharray="4.1 4.1"/><circle cx="250" cy="190" r="8" fill="#e7e5d9"/><circle cx="250" cy="190" r="3"/>
+<rect x="198" y="218" width="40" height="44" fill="#7e8672"/><path d="M198 228H238M198 238H238M198 248H238" stroke-width="1.5"/>
+<rect x="256" y="234" width="24" height="28" fill="#ff754a"/><path d="M256 248H280M268 234V262" stroke-width="1.5"/><rect x="284" y="244" width="22" height="18" fill="#ff754a"/><path d="M284 253H306" stroke-width="1.5"/><rect x="260" y="218" width="18" height="16" fill="#e7e5d9"/>
+</g>${P(250,154)}</g>
+
+<g class="hs" data-i="1" tabindex="0" role="button" aria-label="Web dev console: building apps">
+<rect class="hit" x="190" y="46" width="154" height="96" fill="transparent"/>
+<g class="item">
+<rect x="202" y="58" width="140" height="84" fill="#252820" opacity=".22" stroke="none"/>
+<rect x="196" y="52" width="140" height="84" rx="4" fill="#1b241d"/><path d="M196 70H336"/>
+<circle cx="207" cy="61" r="2.6" fill="#ff754a" stroke="none"/><circle cx="217" cy="61" r="2.6" fill="#d5ff3f" stroke="none"/><circle cx="227" cy="61" r="2.6" fill="#e7e5d9" stroke="none"/>
+<text x="326" y="65" text-anchor="end" fill="#d5ff3f" stroke="none" style="font:500 8px var(--mono)">&lt;/&gt;</text>
+<path d="M206 82H250M214 94H276M214 106H246M206 118H232" stroke="#d5ff3f" stroke-width="3"/><path d="M256 82H300M254 106H296" stroke="#b8c4a2" stroke-width="3"/>
+<rect class="hblk" x="238" y="114" width="5" height="9" fill="#d5ff3f" stroke="none"/>
+</g>${P(338,50)}</g>
+
+<g class="hs" data-i="4" tabindex="0" role="button" aria-label="AI dev console: prompt, review, test">
+<rect class="hit" x="378" y="44" width="82" height="96" fill="transparent"/>
+<g class="item">
+<circle class="ring" cx="416" cy="94" r="30" fill="none" stroke="#77834c" stroke-width="1.5"/>
+<path d="M392 62V52M404 62V52M416 62V52M428 62V52M440 62V52M392 126V136M404 126V136M416 126V136M428 126V136M440 126V136M384 72H374M384 83H374M384 94H374M384 105H374M384 116H374M448 72H458M448 83H458M448 94H458M448 105H458M448 116H458" stroke-width="2"/>
+<rect x="384" y="62" width="64" height="64" rx="8" fill="#e7e5d9"/><rect x="398" y="76" width="36" height="36" rx="4" fill="#252c25"/>
+<text x="416" y="100" text-anchor="middle" fill="#d5ff3f" stroke="none" style="font:700 16px var(--display)">AI</text>
+</g>${P(462,56)}</g>
+
+<g class="hs" data-i="3" tabindex="0" role="button" aria-label="Control tower and checklist: organized and reliable">
+<rect class="hit" x="388" y="156" width="100" height="108" fill="transparent"/>
+<g class="item">
+<rect x="406" y="210" width="18" height="52" fill="#aeb4a1"/><path d="M392 210L398 188H432L438 210Z" fill="#bcd8df"/><rect x="394" y="182" width="42" height="6" fill="#e7e5d9"/><path d="M415 182V168"/><circle class="hblk" cx="415" cy="165" r="3" fill="#ff754a"/>
+<rect x="446" y="222" width="38" height="40" fill="#e7e5d9"/><rect x="458" y="218" width="14" height="6" fill="#252820"/><path d="M452 234l3 3 5-6M452 248l3 3 5-6M466 235h12M466 249h12" fill="none" stroke-width="1.6"/>
+</g>${P(466,208)}</g>
+
+<path d="M22 284H166M22 280v8M166 280v8M184 284H316M184 280v8M316 280v8M388 284H484M388 280v8M484 280v8" stroke="#686a61" stroke-width="1" fill="none"/>
+<g stroke="none" fill="#686a61" style="font:500 9px var(--mono);letter-spacing:.08em"><text x="94" y="302" text-anchor="middle">HANGAR</text><text x="250" y="302" text-anchor="middle">WAREHOUSE</text><text x="436" y="302" text-anchor="middle">TOWER</text></g>
+</g>
+<g class="hint"><rect x="22" y="20" width="160" height="30" rx="15" fill="#e7e5d9" stroke="#252820" stroke-width="2"/><path d="M60 50l6 10 6-10" fill="#e7e5d9" stroke="#252820" stroke-width="2" stroke-linejoin="round"/><text x="102" y="39" text-anchor="middle">Psst… click the + marks</text></g>
+</svg>`;
+var tg=document.querySelector('.drawing-tag');if(tg)tg.textContent='FIG. 01 — CARGO HUB / CLICK THE + MARKS';
+document.getElementById('funDots').innerHTML='<i></i><i></i><i></i><i></i><i></i>';
+var scene=document.getElementById('funScene');
+var D=[
+ {k:'Aviation roots',t:'Aeronautical Engineering graduate',d:'My degree and my OJT in aircraft base and line maintenance support taught me precision, procedures, and safety-first habits.'},
+ {k:'Web dev console',t:'I turn ideas into working apps',d:'BillGuard and Vespoint started as ideas. I guided AI tools, tested every feature, and kept refining until they worked.'},
+ {k:'Hands-on support',t:'Toolroom and inventory know-how',d:'Under supervision, I prepared and issued tools and materials, tracked inventory, and kept documentation accurate.'},
+ {k:'Organized & reliable',t:'Neat records, clear follow-ups',d:'I keep notes, tasks, and deadlines in order, so your team always knows where things stand. Coffee helps.'},
+ {k:'AI dev console',t:'AI is the co-pilot. I am pilot-in-command.',d:'I write clear prompts, review every output, and test each feature before it ships, the same checklist mindset I learned in aircraft maintenance.'}
+];
+var hs=scene.querySelectorAll('.hs'),dots=document.querySelectorAll('#funDots i'),
+    kick=document.getElementById('funKick'),title=document.getElementById('funTitle'),
+    text=document.getElementById('funText'),unlock=document.getElementById('funUnlock'),
+    seen=[false,false,false,false,false];
+function show(el,count){
+  var i=Number(el.dataset.i),d=D[i];if(!d)return;
+  title.textContent=d.t;text.textContent=d.d;kick.textContent=d.k;
+  hs.forEach(function(h){h.classList.toggle('on',h===el)});
+  if(count){
+    seen[i]=true;el.classList.add('seen');scene.classList.add('touched');
+    dots.forEach(function(x,k){x.classList.toggle('on',seen[k])});
+    if(seen.every(Boolean)){unlock.hidden=false;kick.textContent='Achievement unlocked'}
+  }
+}
+hs.forEach(function(h){
+  h.addEventListener('mouseenter',function(){show(h,false)});
+  h.addEventListener('focus',function(){show(h,false)});
+  h.addEventListener('click',function(){show(h,true)});
+  h.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();show(h,true)}});
+});
+}
+})();
+</script>
+
+<script>
+/* ===== E. extra background layer: web dev + AI dev + supply chain + cargo + manufacturing ===== */
+(function(){
+if(document.getElementById('bg2'))return;
+var still=matchMedia('(prefers-reduced-motion:reduce)').matches,fine=matchMedia('(pointer:fine)').matches;
+var cv=document.createElement('canvas');cv.id='bg2';cv.setAttribute('aria-hidden','true');
+cv.style.cssText='position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none';
+document.body.prepend(cv);
+var c=cv.getContext('2d'),W,H,mx=-999,my=-999,MONO='"IBM Plex Mono",monospace',CY='127,214,228',OR='255,106,43',AC='185,199,104';
+var K=function(r,a){return 'rgba('+r+','+a+')'};
+function rs(){var D=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=W*D;cv.height=H*D;c.setTransform(D,0,0,D,0,0);if(still)draw(0)}
+if(fine)addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY});
+function lab(s,x,y,col,a){c.font='500 9px '+MONO;c.fillStyle=K(col,a);c.fillText(s,x,y)}
+function gear(x,y,r,rot,a){c.beginPath();for(var i=0;i<10;i++){var b=rot+i*.6283;[[.8,-.2],[1,-.1],[1,.1],[.8,.2]].forEach(function(p){c.lineTo(x+Math.cos(b+p[1])*r*p[0],y+Math.sin(b+p[1])*r*p[0])})}c.closePath();c.moveTo(x+r*.3,y);c.arc(x,y,r*.3,0,6.283);c.strokeStyle=K(OR,a);c.stroke()}
+function arm(x,y,t,a){var a1=-1.15+Math.sin(t/1700)*.45,a2=a1+1.25+Math.cos(t/1300)*.45,x1=x+Math.cos(a1)*62,y1=y-6+Math.sin(a1)*62,x2=x1+Math.cos(a2)*48,y2=y1+Math.sin(a2)*48;c.strokeStyle=K(OR,a);c.strokeRect(x-14,y-6,28,6);c.beginPath();c.moveTo(x,y-6);c.lineTo(x1,y1);c.lineTo(x2,y2);c.stroke();[[x,y-6],[x1,y1]].forEach(function(p){c.beginPath();c.arc(p[0],p[1],4,0,6.283);c.stroke()});c.beginPath();c.moveTo(x2-6,y2+4);c.lineTo(x2,y2);c.lineTo(x2+6,y2+4);c.stroke()}
+function chip(x,y,s,t,a){c.strokeStyle=K(AC,a);c.strokeRect(x,y,s,s);c.strokeRect(x+s*.25,y+s*.25,s*.5,s*.5);c.beginPath();for(var i=1;i<5;i++){var o=s*i/5;c.moveTo(x+o,y);c.lineTo(x+o,y-8);c.moveTo(x+o,y+s);c.lineTo(x+o,y+s+8);c.moveTo(x,y+o);c.lineTo(x-8,y+o);c.moveTo(x+s,y+o);c.lineTo(x+s+8,y+o)}c.stroke();c.font='500 11px '+MONO;c.fillStyle=K(AC,a+.1);c.textAlign='center';c.fillText('AI',x+s/2,y+s/2+4);c.textAlign='left';var p=(t/1600)%1;c.strokeStyle=K(AC,a*(1-p));c.strokeRect(x-p*14,y-p*14,s+p*28,s+p*28)}
+var NN=[],NE=[];[3,4,3].forEach(function(n,l){for(var i=0;i<n;i++)NN.push([l*46,(i-(n-1)/2)*24,l])});NN.forEach(function(a,i){NN.forEach(function(b,j){if(b[2]===a[2]+1)NE.push([i,j])})});
+function nn(x,y,t,a){c.strokeStyle=K(AC,a*.6);c.beginPath();NE.forEach(function(e){c.moveTo(x+NN[e[0]][0],y+NN[e[0]][1]);c.lineTo(x+NN[e[1]][0],y+NN[e[1]][1])});c.stroke();NN.forEach(function(n){c.beginPath();c.arc(x+n[0],y+n[1],3.4,0,6.283);c.fillStyle=K(AC,a+.1);c.fill()});var k=Math.floor(t/450)%NE.length,f=(t/450)%1,A=NN[NE[k][0]],B=NN[NE[k][1]];c.beginPath();c.arc(x+A[0]+(B[0]-A[0])*f,y+A[1]+(B[1]-A[1])*f,3,0,6.283);c.fillStyle=K(OR,.8);c.fill()}
+function win(x,y,w,h,t,a){c.strokeStyle=K(CY,a);c.strokeRect(x,y,w,h);c.beginPath();c.moveTo(x,y+13);c.lineTo(x+w,y+13);c.stroke();[0,1,2].forEach(function(i){c.beginPath();c.arc(x+9+i*9,y+6.5,2,0,6.283);c.fillStyle=K(CY,a+.1);c.fill()});var f=(t/2600)%1.3,i;c.beginPath();for(i=0;i<5;i++){var L=(w-28)*(.4+((i*37)%10)/18)*Math.min(1,Math.max(0,f*5-i)),X=x+10+(i%3===1?10:0);c.moveTo(X,y+26+i*12);c.lineTo(X+L,y+26+i*12)}c.stroke()}
+function ship(x,y,a,t){y+=Math.sin(t/900)*2;c.strokeStyle=K(CY,a);c.beginPath();c.moveTo(x,y);c.lineTo(x+170,y);c.lineTo(x+150,y+18);c.lineTo(x+16,y+18);c.closePath();c.stroke();c.strokeRect(x+10,y-36,18,36);var cl=[OR,CY,AC];for(var r=0;r<3;r++)for(var i=0;i<8;i++){c.strokeStyle=K(cl[(i+r)%3],a+.04);c.strokeRect(x+36+i*16,y-12-r*12,14,10)}}
+function truck(x,y,a){c.strokeStyle=K(OR,a);c.strokeRect(x,y-22,52,20);c.beginPath();c.moveTo(x+54,y-2);c.lineTo(x+54,y-16);c.lineTo(x+68,y-16);c.lineTo(x+76,y-8);c.lineTo(x+76,y-2);c.closePath();c.stroke();[10,38,64].forEach(function(o){c.beginPath();c.arc(x+o,y,5,0,6.283);c.stroke()})}
+var TK=[['</>',.12,.2,CY],['{ }',.38,.55,CY],['=>',.56,.82,CY],['SKU-2231',.9,.4,OR],['AWB 618',.3,.18,OR],['0x1F',.7,.5,CY],['PO-1042',.05,.8,OR],['async',.62,.3,CY]];
+function draw(t){
+ c.clearRect(0,0,W,H);c.lineWidth=1.2;
+ var sy=scrollY,u=Math.min(1,W/1200),big=W>760,oy=function(f){return -sy*f},
+  A=function(x,y,b){return b+.5*Math.max(0,1-Math.hypot(x-mx,y-my)/260)};
+ /* floating code and cargo tokens */
+ TK.forEach(function(k,i){var x=k[1]*W,y=((k[2]*H-t*.012*(1+i%3*.4)+oy(.02))%H+H)%H;c.font='500 11px '+MONO;c.fillStyle=K(k[3],A(x,y,.12));c.fillText(k[0],x,y)});
+ /* manufacturing: meshed gears */
+ var r1=34*u+10,r2=r1*.55,g1x=W*.07,g1y=H*.3+oy(.05),a1=A(g1x,g1y,.2);
+ gear(g1x,g1y,r1,t/2200,a1);gear(g1x+(r1+r2)*.88*Math.cos(.55),g1y+(r1+r2)*.88*Math.sin(.55),r2,-t/2200*(r1/r2)+.3,a1);lab('ASSY LINE 02',g1x-r1,g1y-r1-10,OR,a1);
+ gear(W*.93,H*.62+oy(.04),30*u+8,-t/3000,A(W*.93,H*.62,.18));
+ /* AI dev: chip and neural net */
+ var cx=W*.44,cy=H*.09+oy(.03);chip(cx,cy,48*Math.max(.7,u),t,A(cx,cy,.2));lab('MODEL v2',cx,cy+72,AC,.2);
+ if(big){var nx=W*.8,ny=H*.22+oy(.04);nn(nx,ny,t,A(nx,ny,.2));
+  var wx=W*.21,wy=H*.62+oy(.05);win(wx,wy,150,92,t,A(wx,wy,.18));lab('GET /api/bills',wx,wy+108,CY,.2)}
+ /* cargo: container ship on a wave line */
+ var sh=H*.84;c.beginPath();for(var x=0;x<=W;x+=12)c.lineTo(x,sh+22+Math.sin(x/40+t/700)*3);c.strokeStyle=K(CY,.1);c.stroke();
+ if(big){var shx=((t/60000)%1)*(W+300)-220;ship(shx,sh,A(shx+80,sh,.18),t);lab('CARGO 40FT',shx+40,sh+38,CY,.18)}
+ /* supply chain: conveyor, robot arm, crates, truck on the road */
+ var by=H-48,bx=W*.46;c.strokeStyle=K(OR,.16);c.beginPath();c.moveTo(bx,by);c.lineTo(W*.98,by);c.stroke();
+ for(var rx=bx;rx<W*.98;rx+=36){c.beginPath();c.arc(rx,by+5,3,0,6.283);c.stroke()}
+ var span=W*.98-bx;for(var i=0;i<6;i++){var px=bx+((i*span/6+t*.03)%span);c.strokeStyle=K(OR,A(px,by,.2));c.strokeRect(px,by-18,18,18);c.beginPath();c.moveTo(px,by-9);c.lineTo(px+18,by-9);c.stroke()}
+ arm(W*.62,by-20,t,A(W*.62,by,.2));lab('LINE 02 · CONVEYOR',bx,by+22,OR,.18);
+ c.setLineDash([10,10]);c.lineDashOffset=-t/40;c.strokeStyle=K(OR,.1);c.beginPath();c.moveTo(0,H-8);c.lineTo(W,H-8);c.stroke();c.setLineDash([]);
+ var tx=((t/24000)%1)*(W+200)-100;truck(tx,H-14,A(tx,H,.2));
+}
+rs();addEventListener('resize',rs);
+if(!still)(function loop(t){draw(t);requestAnimationFrame(loop)})(0);
+})();
+</script>
+<!-- ===== END ADD-ON V2 ===== -->
+ <style>
+/* ---------- flight deck: maintenance console ---------- */
+.fd-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:12px}
+.fd-seg{display:inline-flex;border:1px solid var(--line)}
+.fd-seg button,.fd-safe,.fd-btn{font:10px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#8a9a9a;background:none;border:0;padding:9px 14px;cursor:pointer;transition:background .2s,color .2s}
+.fd-seg button.on{background:var(--acid);color:#0a1519}
+.fd-safe{border:1px solid var(--line)}
+.fd-safe[aria-pressed="true"]{color:var(--acid);border-color:var(--acid)}
+.fd-btn:hover,.fd-safe:hover{color:var(--paper)}
+.fd-reg{font:10px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#6f8084}
+.fd-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}
+.fd-map{border:1px solid var(--line);background:#050b0d}
+.fd-map svg{display:block;width:100%}
+.fd-map .body{fill:#0f1b20;stroke:#2b4650;stroke-width:1.2}
+.fd-lab{font:500 8px var(--mono);fill:#8a9a9a;letter-spacing:.06em;paint-order:stroke;stroke:#050b0d;stroke-width:3px}
+.fd-z{cursor:pointer;outline:none}
+.fd-z .sh{fill:#16262c;stroke:#6f8c92;stroke-width:1.4;transition:stroke .2s,fill .2s}
+.fd-z:hover .sh,.fd-z:focus-visible .sh{stroke:var(--cy)}
+.fd-z.part .sh{stroke:var(--orange)}
+.fd-z.sel .sh{stroke:var(--orange);fill:rgba(255,106,43,.2)}
+.fd-z.done .sh{stroke:var(--acid);fill:rgba(185,199,104,.22)}
+.fd-pl{fill:none;stroke:var(--orange);stroke-width:1.4;transform-box:fill-box;transform-origin:center;animation:fdPl 2s ease-out infinite;pointer-events:none}
+.touched .fd-pl{display:none}
+@keyframes fdPl{from{transform:scale(.5);opacity:1}to{transform:scale(2.2);opacity:0}}
+.fd[data-m="line"] .ex-base,.fd[data-m="base"] .ex-line{display:none}
+.fd-ex{fill:none;stroke:#6f8c92;stroke-width:1.2;stroke-dasharray:4 4}
+.fd-card{border:1px solid var(--line);background:rgba(4,9,11,.85);display:flex;flex-direction:column;min-width:0}
+.fd-h{padding:12px 14px;border-bottom:1px solid var(--line)}
+.fd-h b{display:block;font:600 20px var(--display);letter-spacing:.01em;color:var(--paper)}
+.fd-h span{font:10px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#6f8084}
+.fd-list{list-style:none;margin:0;padding:4px 0;flex:1}
+.fd-empty{padding:14px;font:12px/1.7 var(--mono);color:#6f8084}
+.fd-it{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid rgba(235,232,216,.06);padding:9px 14px;font:12px/1.5 var(--mono);color:#c3ccc8;cursor:pointer}
+.fd-it i{flex:0 0 14px;height:14px;margin-top:2px;border:1px solid #6f8084;display:grid;place-items:center;font:700 10px/1 var(--mono);font-style:normal;color:#0a1519}
+.fd-it.done i{background:var(--acid);border-color:var(--acid)}
+.fd-it.next{color:var(--paper)}.fd-it.next i{border-color:var(--orange)}
+.fd-it:disabled{cursor:not-allowed}
+.fd-it:disabled:not(.done){opacity:.4}
+.fd-warn{margin:0;padding:0 14px;font:10px/1.6 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--orange)}
+.fd-sign{margin:12px 14px;padding:11px;border:1px solid var(--acid);background:none;color:var(--acid);font:10px var(--mono);letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .2s,color .2s}
+.fd-sign:hover:not(:disabled){background:var(--acid);color:#0a1519}
+.fd-sign:disabled{border-color:var(--line);color:#6f8084;cursor:not-allowed}
+.fd-log{margin-top:14px;border:1px solid var(--line);padding:10px 14px;font:11px/1.8 var(--mono);color:#c3ccc8;min-height:64px;overflow-x:auto;white-space:pre}
+@media(max-width:760px){.fd-grid{grid-template-columns:1fr}}
+
+/* ---------- who's behind it: shadow board ---------- */
+.fsw{transform-box:view-box;transform-origin:414px 78px;animation:fsw 3.6s ease-in-out infinite}
+@keyframes fsw{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+.stm{animation:stm 2.4s ease-in-out infinite}
+.stm:nth-of-type(2){animation-delay:.8s}
+@keyframes stm{0%{opacity:0;transform:translateY(4px)}50%{opacity:.9}100%{opacity:0;transform:translateY(-5px)}}
+@media(prefers-reduced-motion:reduce){.fsw,.stm{animation:none}}
+</style>
+
+<script>
+(function(){
+var W=document.getElementById('workbench'),pane=W&&W.querySelector('.pro-pane');
+
+/* ===================== 1. FLIGHT DECK = LINE + BASE MAINTENANCE CONSOLE ===================== */
+if(pane){
+var sm=W.querySelector('.pro-nav button small');if(sm)sm.textContent='Line and base maintenance';
+var Z={
+ avionics:{n:'Avionics bay',a:'ATA 34',t:5,
+  line:['Pitot and static ports clear, covers off','Cockpit warnings checked against the MEL','Defects entered in the tech log'],
+  base:['Wiring and connectors inspected for chafing','Instrument function test per task card','Records updated against the task card']},
+ engines:{n:'Engines',a:'ATA 71',t:8,
+  line:['Inlet and fan blades inspected for damage','Oil level checked, cowl latches secure','No leaks, panels closed']},
+ gear:{n:'Landing gear',a:'ATA 32',t:6,
+  line:['Tire wear and pressure checked','Brake wear indicators within limits','Strut extension and leaks checked']},
+ controls:{n:'Flight controls',a:'ATA 27',t:6,
+  line:['Flaps and slats visually checked','Control surfaces free and secure','Static wicks and hinges intact']}
+};
+Z.engines.base=['Borescope inspection recorded','Mounts and fasteners torqued to the manual','Run-up and leak check witnessed'];
+Z.gear.base=['Strut and actuators inspected on jacks','Retraction test run per procedure','Fasteners torqued, witness marks applied'];
+Z.controls.base=['Cable tension and rigging verified','Actuators and tracks lubricated','Full-travel check recorded'];
+
+pane.innerHTML=`<div class="cockpit fd" data-m="line" style="padding:14px">
+<div class="fd-bar">
+ <div class="fd-seg" role="group" aria-label="Maintenance type"><button class="on" data-m="line">Line</button><button data-m="base">Base</button></div>
+ <button class="fd-safe" aria-pressed="false">Safe to work: OFF</button>
+ <span class="fd-reg">Demo aircraft</span><button class="fd-btn" id="fdReset">Reset</button>
+</div>
+<div class="fd-grid">
+ <div class="fd-map"><svg id="fdSvg" viewBox="0 0 360 300" role="group" aria-label="Interactive aircraft. Select a zone to open its task card.">
+  <g class="ex-base"><rect x="8" y="8" width="344" height="284" class="fd-ex"/><text x="16" y="22" class="fd-lab">HANGAR BAY · HEAVY CHECK</text>
+   <path d="M44 214l8 14h-16zM316 214l8 14h-16zM180 268l8 14h-16z" fill="#ffb020"/><text x="58" y="226" class="fd-lab">JACK</text></g>
+  <g class="ex-line"><path d="M8 290H352" class="fd-ex"/><text x="16" y="284" class="fd-lab">RAMP · TURNAROUND</text>
+   <path d="M148 186l-8 8h8zM212 186l8 8h-8z" fill="#ffb020"/><rect x="262" y="92" width="44" height="22" class="fd-ex"/><text x="272" y="106" class="fd-lab">GPU</text><path d="M262 103H202" class="fd-ex"/></g>
+  <path class="body" d="M180 14C196 14 202 40 202 70V250C202 266 192 284 180 290C168 284 158 266 158 250V70C158 40 164 14 180 14Z"/>
+  <path class="body" d="M160 118L40 188V206L160 176ZM200 118L320 188V206L200 176Z"/>
+  <g class="fd-z" data-z="avionics" tabindex="0" role="button" aria-label="Avionics bay task card"><path class="sh" d="M180 18C191 18 197 38 198 60H162C163 38 169 18 180 18Z"/><path d="M170 30H190L188 38H172Z" fill="#7fd6e4"/><text x="204" y="34" class="fd-lab">AVIONICS</text><circle class="fd-pl" cx="180" cy="48" r="8"/></g>
+  <g class="fd-z" data-z="engines" tabindex="0" role="button" aria-label="Engines task card"><rect class="sh" x="74" y="146" width="20" height="44" rx="10"/><rect class="sh" x="266" y="146" width="20" height="44" rx="10"/><text x="20" y="144" class="fd-lab">ENGINES</text><circle class="fd-pl" cx="84" cy="168" r="8"/></g>
+  <g class="fd-z" data-z="gear" tabindex="0" role="button" aria-label="Landing gear task card"><rect class="sh" x="143" y="150" width="12" height="26"/><rect class="sh" x="205" y="150" width="12" height="26"/><rect class="sh" x="174" y="68" width="12" height="16"/><text x="222" y="86" class="fd-lab">GEAR</text><circle class="fd-pl" cx="149" cy="163" r="8"/></g>
+  <g class="fd-z" data-z="controls" tabindex="0" role="button" aria-label="Flight controls task card"><path class="sh" d="M158 170L100 186V192L158 176ZM202 170L260 186V192L202 176Z"/><path class="sh" d="M162 246L112 266V276L162 264ZM198 246L248 266V276L198 264Z"/><text x="214" y="262" class="fd-lab">FLT CTRL</text><circle class="fd-pl" cx="130" cy="181" r="8"/></g>
+ </svg></div>
+ <div class="fd-card"><div class="fd-h"><b id="fdTitle"></b><span id="fdSub"></span></div><ul class="fd-list" id="fdList"></ul><p class="fd-warn" id="fdWarn"></p><button class="fd-sign" id="fdSign" hidden></button></div>
+</div>
+<div class="fd-log" id="fdLog" aria-live="polite"></div>
+<div class="kp"><div>Tools out<b id="fdT">0</b></div><div>Zones signed<b id="fdZ">0 / 4</b></div><div>Status<b id="fdS">In work</b></div></div>
+</div>`;
+
+var fd=pane.querySelector('.fd'),svg=pane.querySelector('#fdSvg'),zs=svg.querySelectorAll('.fd-z'),
+ segs=fd.querySelectorAll('.fd-seg button'),safeB=fd.querySelector('.fd-safe'),
+ $=function(i){return pane.querySelector('#'+i)},
+ hT=$('fdTitle'),hS=$('fdSub'),list=$('fdList'),warn=$('fdWarn'),sign=$('fdSign'),logEl=$('fdLog'),kt=$('fdT'),kz=$('fdZ'),ks=$('fdS');
+var mode='line',cur=null,safe=false,n=0,logs=[],S;
+function init(){S={line:{},base:{}};for(var m in S)for(var z in Z)S[m][z]={p:0,s:false};logs=[];n=0}
+function items(z){var o=Z[z];return ['Issue tools from the toolroom · '+o.t+' logged'].concat(o[mode],['Return tools · '+o.t+' of '+o.t+' counted'])}
+function pad(x){return (x<10?'00':x<100?'0':'')+x}
+function hhmm(){return new Date().toTimeString().slice(0,5)}
+function render(){
+ fd.dataset.m=mode;
+ segs.forEach(function(b){b.classList.toggle('on',b.dataset.m===mode)});
+ safeB.setAttribute('aria-pressed',String(safe));safeB.textContent='Safe to work: '+(safe?'ON':'OFF');
+ var out=0,sg=0;
+ zs.forEach(function(g){var z=g.dataset.z,s=S[mode][z],L=items(z).length;
+  g.classList.toggle('sel',z===cur);g.classList.toggle('done',s.s);g.classList.toggle('part',!s.s&&s.p>0);
+  if(s.s)sg++;if(s.p>0&&s.p<L)out+=Z[z].t});
+ kt.textContent=out;kz.textContent=sg+' / 4';ks.textContent=sg===4?'Released':'In work';
+ if(!cur){hT.textContent='Pick a zone';hS.textContent='Select it on the aircraft';
+  list.innerHTML='<li class="fd-empty">Switch between line and base checks, set safe to work, then open a zone and work its task card in order.</li>';
+  sign.hidden=true;warn.textContent=''}
+ else{var o=Z[cur],s=S[mode][cur],it=items(cur);
+  hT.textContent=o.n;hS.textContent=o.a+' · '+(mode==='line'?'line check':'base check');
+  list.innerHTML=it.map(function(x,i){var d=i<s.p,ok=safe&&!s.s&&(i===s.p||i===s.p-1);
+   return '<li><button class="fd-it'+(d?' done':i===s.p?' next':'')+'" data-i="'+i+'"'+(ok?'':' disabled')+'><i>'+(d?'✓':'')+'</i><span>'+x+'</span></button></li>'}).join('');
+  sign.hidden=false;sign.disabled=!(s.p===it.length&&!s.s);sign.textContent=s.s?'Task card closed':'Sign off task card';
+  warn.textContent=(!safe&&!s.s)?'Set safe to work first: chocks in, pins fitted, power off.':''}
+ logEl.innerHTML=logs.length?logs.map(function(l){return '<div>'+l+'</div>'}).join(''):'<div class="d">Tech log is empty. Sign off a task card to write an entry.</div>';
+}
+function pick(g){cur=g.dataset.z;svg.classList.add('touched');render()}
+zs.forEach(function(g){g.addEventListener('click',function(){pick(g)});g.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();pick(g)}})});
+segs.forEach(function(b){b.addEventListener('click',function(){mode=b.dataset.m;render()})});
+safeB.addEventListener('click',function(){safe=!safe;render()});
+$('fdReset').addEventListener('click',function(){init();cur=null;safe=false;svg.classList.remove('touched');render()});
+list.addEventListener('click',function(e){var b=e.target.closest('.fd-it');if(!b||b.disabled)return;
+ var i=+b.dataset.i,s=S[mode][cur];if(i===s.p)s.p++;else if(i===s.p-1)s.p--;render()});
+sign.addEventListener('click',function(){var s=S[mode][cur],o=Z[cur];if(s.p!==items(cur).length||s.s)return;
+ s.s=true;var M=mode.toUpperCase();
+ logs.unshift('TL-'+pad(++n)+' · '+hhmm()+' · '+M+' · '+o.a+' '+o.n+' · card closed · tools '+o.t+'/'+o.t);
+ var all=true;for(var z in Z)if(!S[mode][z].s)all=false;
+ if(all)logs.unshift('TL-'+pad(++n)+' · '+hhmm()+' · '+M+' · RELEASED TO SERVICE');
+ if(logs.length>5)logs.length=5;render()});
+init();render();
+}
+
+/* ===================== 2. WHO'S BEHIND IT? = TOOLROOM SHADOW BOARD ===================== */
+var old=document.getElementById('funScene');
+if(old){
+var P=function(x,y){return '<g class="pin" transform="translate('+x+' '+y+')"><circle class="ring" r="11" fill="none" stroke="#d5ff3f"/><circle class="dotc" r="9" fill="#d5ff3f"/><path d="M-4 0H4M0 -4V4"/></g>'};
+var SIL='fill="none" stroke="#77834c" stroke-width="1.5" stroke-dasharray="4 4"';
+old.outerHTML=`<svg id="funScene" viewBox="0 0 500 330" role="group" aria-label="Interactive toolroom shadow board. Select a tool to learn about me.">
+<defs><pattern id="pegp" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="7" cy="7" r="1.3" fill="#4d594a"/></pattern></defs>
+<g stroke="#252820" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<rect x="10" y="40" width="480" height="274" rx="6" fill="#2d352c"/><rect x="10" y="40" width="480" height="274" rx="6" fill="url(#pegp)" stroke="none"/>
+
+<g class="hs" data-i="0" tabindex="0" role="button" aria-label="Torque wrench: aeronautical engineering and maintenance training">
+<rect class="hit" x="24" y="58" width="176" height="62" fill="transparent"/>
+<g ${SIL} transform="translate(3 5)"><rect x="34" y="78" width="130" height="14" rx="7"/><circle cx="178" cy="85" r="15"/></g>
+<g class="item"><rect x="34" y="78" width="130" height="14" rx="7" fill="#e7e5d9"/><rect x="34" y="78" width="54" height="14" rx="7" fill="#ff754a"/><path d="M44 78V92M54 78V92M64 78V92M74 78V92M104 78v5M114 78v5M124 78v5M134 78v5" stroke-width="1.5"/><circle cx="178" cy="85" r="15" fill="#aeb4a1"/><circle cx="178" cy="85" r="5" fill="#2d352c"/>
+<text x="100" y="110" stroke="none" fill="#aeb4a1" style="font:500 8px var(--mono);letter-spacing:.08em">TQ-07</text></g>${P(108,66)}</g>
+
+<g class="hs" data-i="1" tabindex="0" role="button" aria-label="Maintenance tablet: building web apps">
+<rect class="hit" x="228" y="54" width="130" height="98" fill="transparent"/>
+<g ${SIL} transform="translate(4 5)"><rect x="236" y="62" width="112" height="78" rx="6"/></g>
+<g class="item"><rect x="236" y="62" width="112" height="78" rx="6" fill="#1b241d"/><rect x="243" y="69" width="98" height="64" rx="2" fill="#252c25" stroke="none"/>
+<text x="334" y="80" text-anchor="end" fill="#d5ff3f" stroke="none" style="font:500 8px var(--mono)">&lt;/&gt;</text>
+<path d="M250 84H282M256 96H312M256 108H292M250 120H274" stroke="#d5ff3f" stroke-width="3"/><path d="M290 84H322M298 108H326" stroke="#b8c4a2" stroke-width="3"/><rect class="hblk" x="278" y="116" width="5" height="9" fill="#d5ff3f" stroke="none"/></g>${P(350,66)}</g>
+
+<g class="hs" data-i="2" tabindex="0" role="button" aria-label="Parts bin: toolroom and inventory">
+<rect class="hit" x="28" y="164" width="166" height="110" fill="transparent"/>
+<g ${SIL} transform="translate(4 5)"><rect x="34" y="172" width="150" height="76" rx="4"/></g>
+<g class="item"><rect x="34" y="172" width="150" height="76" rx="4" fill="#d4d8c4"/><path d="M84 172V248M134 172V248" stroke-width="1.5"/>
+<g fill="#7e8672" stroke-width="1.5"><circle cx="50" cy="198" r="6"/><circle cx="66" cy="212" r="6"/><circle cx="52" cy="228" r="6"/></g>
+<g fill="#aeb4a1" stroke-width="1.5"><rect x="94" y="194" width="26" height="7" rx="3"/><rect x="94" y="210" width="26" height="7" rx="3"/><rect x="94" y="226" width="26" height="7" rx="3"/></g>
+<g fill="#e7e5d9" stroke-width="1.5"><circle cx="150" cy="198" r="7"/><circle cx="168" cy="210" r="7"/><circle cx="152" cy="228" r="7"/></g>
+<rect x="34" y="252" width="150" height="16" rx="3" fill="#252c25"/><text x="109" y="264" text-anchor="middle" stroke="none" fill="#ff754a" style="font:500 8px var(--mono);letter-spacing:.08em">BIN C3 · LOW STOCK</text></g>${P(186,172)}</g>
+
+<g class="hs" data-i="3" tabindex="0" role="button" aria-label="Clipboard and coffee: organized and reliable">
+<rect class="hit" x="208" y="156" width="172" height="120" fill="transparent"/>
+<g ${SIL} transform="translate(4 5)"><rect x="214" y="170" width="88" height="100" rx="4"/><rect x="322" y="228" width="34" height="40" rx="5"/></g>
+<g class="item"><rect x="214" y="170" width="88" height="100" rx="4" fill="#e7e5d9"/><rect x="238" y="163" width="40" height="16" rx="3" fill="#aeb4a1"/>
+<path d="M226 196l4 4 7-8M244 196H288M226 214l4 4 7-8M244 214H278M244 233H284M226 258H290" fill="none" stroke-width="1.8"/><rect x="226" y="228" width="10" height="10" fill="none" stroke-width="1.5"/>
+<path d="M312 268H368" stroke="#aeb4a1" stroke-width="3"/><rect x="322" y="228" width="34" height="40" rx="5" fill="#ff754a"/><path d="M356 238h8q8 0 8 10t-8 10h-8" fill="none"/><path d="M322 240H356" stroke-width="1.5"/>
+<g fill="none" stroke="#aeb4a1" stroke-width="2"><path class="stm" d="M334 220q-5-8 0-14"/><path class="stm" d="M346 220q-5-8 0-14"/></g></g>${P(306,170)}</g>
+
+<g class="hs" data-i="4" tabindex="0" role="button" aria-label="Review-before-ship tag: AI as co-pilot, me as pilot-in-command">
+<rect class="hit" x="384" y="50" width="62" height="200" fill="transparent"/>
+<g ${SIL} transform="translate(4 5)"><rect x="396" y="86" width="36" height="150"/></g>
+<g class="item"><circle cx="414" cy="66" r="9" fill="none" stroke="#aeb4a1" stroke-width="3"/>
+<g class="fsw"><path d="M414 75V86"/><rect x="396" y="86" width="36" height="150" fill="#ff754a"/>
+<text transform="translate(420 98) rotate(90)" stroke="none" fill="#252820" style="font:700 9px var(--mono);letter-spacing:.14em">REVIEW BEFORE SHIP</text>
+<rect x="402" y="202" width="24" height="24" rx="3" fill="#252c25"/><text x="414" y="219" text-anchor="middle" fill="#d5ff3f" stroke="none" style="font:700 12px var(--display)">AI</text></g></g>${P(448,70)}</g>
+
+<path d="M384 262H464" stroke="#77834c" stroke-width="12" stroke-dasharray="4 4" fill="none" opacity=".7"/><circle cx="474" cy="268" r="11" ${SIL}/>
+<g stroke="none" fill="#aeb4a1" style="font:500 8px var(--mono);letter-spacing:.08em"><text x="384" y="292">ON LOAN: ME, UNTIL I'M HIRED</text><text x="250" y="306" text-anchor="middle">TOOLROOM SHADOW BOARD</text></g>
+</g>
+<g class="hint"><rect x="22" y="4" width="160" height="26" rx="13" fill="#e7e5d9" stroke="#252820" stroke-width="2"/><path d="M60 30l6 9 6-9" fill="#e7e5d9" stroke="#252820" stroke-width="2" stroke-linejoin="round"/><text x="102" y="21" text-anchor="middle">Psst… click the + marks</text></g>
+</svg>`;
+var tg=document.querySelector('.drawing-tag');if(tg)tg.textContent='FIG. 01 — SHADOW BOARD / CLICK THE + MARKS';
+var scene=document.getElementById('funScene');
+var D=[
+ {k:'Aviation roots',t:'Torque it, tag it, sign it',d:'My Aeronautical Engineering degree and OJT in aircraft base and line maintenance support taught me to work procedure first.'},
+ {k:'Web dev console',t:'Ideas become working apps',d:'BillGuard and Vespoint started as ideas. I guided AI tools, tested every feature, and kept refining until they worked.'},
+ {k:'Hands-on support',t:'Every part has a place',d:'Under supervision, I prepared and issued tools and materials, tracked inventory, and kept documentation accurate.'},
+ {k:'Organized & reliable',t:'Clear notes, clear follow-ups',d:'I keep notes, tasks, and deadlines in order, so your team always knows where things stand. Coffee helps.'},
+ {k:'AI dev console',t:'AI is the co-pilot. I am pilot-in-command.',d:'I write clear prompts, review every output, and test each feature before it ships, the same checklist mindset I learned in aircraft maintenance.'}
+];
+var hs=scene.querySelectorAll('.hs'),dots=document.querySelectorAll('#funDots i'),
+ kick=document.getElementById('funKick'),title=document.getElementById('funTitle'),
+ text=document.getElementById('funText'),unlock=document.getElementById('funUnlock'),
+ seen=[false,false,false,false,false];
+dots.forEach(function(x){x.classList.remove('on')});if(unlock)unlock.hidden=true;
+function show(el,count){
+ var i=Number(el.dataset.i),d=D[i];if(!d)return;
+ title.textContent=d.t;text.textContent=d.d;kick.textContent=d.k;
+ hs.forEach(function(h){h.classList.toggle('on',h===el)});
+ if(count){seen[i]=true;el.classList.add('seen');scene.classList.add('touched');
+  dots.forEach(function(x,k){x.classList.toggle('on',seen[k])});
+  if(seen.every(Boolean)){unlock.hidden=false;kick.textContent='Achievement unlocked'}}
+}
+hs.forEach(function(h){
+ h.addEventListener('mouseenter',function(){show(h,false)});
+ h.addEventListener('focus',function(){show(h,false)});
+ h.addEventListener('click',function(){show(h,true)});
+ h.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();show(h,true)}});
+});
+}
+})();
+</script>
+<!-- ===== END ADD-ON V3 PATCH ===== -->
+ <style>
+/* ---------- who's behind it: larger drawing and type ---------- */
+.drawing svg{max-width:640px}
+.drawing-tag,.drawing-foot{font-size:12px}
+.fun-card{max-width:640px;padding:22px 26px 26px}
+.fun-kick{font-size:13px}
+.fun-dots i{width:11px;height:11px}
+.fun-card strong{font-size:32px;line-height:1.1}
+.fun-card p{font-size:17px;line-height:1.7}
+.fun-unlock{font-size:12px;padding:13px 16px}
+.profile-copy p{font-size:16.5px;line-height:1.85}
+.profile-copy .mono{font-size:13px}
+.profile-copy .btn{font-size:12px;padding:15px 20px}
+.fact strong{font-size:13px}
+.fact span{font-size:15px}
+@media(min-width:901px){.profile-grid{grid-template-columns:1.2fr 1fr;gap:5vw}}
+/* ---------- flight deck: support zones ---------- */
+.fd-z .ic{fill:none;stroke:#9fb0b0;stroke-width:1.6;transition:stroke .2s}
+.fd-z:hover .ic,.fd-z:focus-visible .ic{stroke:var(--cy)}
+.fd-z.sel .ic{stroke:var(--orange)}
+.fd-z.done .ic{stroke:var(--acid)}
+.fd-z.part .ic{stroke:var(--orange)}
+</style>
+
+<script>
+(function(){
+/* ===================== 1. WHO'S BEHIND IT: larger labels inside the drawing ===================== */
+var sc=document.getElementById('funScene');
+if(sc){
+ var fs={'TQ-07':12,'</>':12,'BIN C3 · LOW STOCK':11.5,'REVIEW BEFORE SHIP':11,'AI':17,'TOOLROOM SHADOW BOARD':12,"ON LOAN: ME, UNTIL I'M HIRED":12};
+ sc.querySelectorAll('text').forEach(function(t){
+  var k=t.textContent.trim();
+  if(k==="ON LOAN: ME, UNTIL I'M HIRED"){t.textContent='ON LOAN: ME';t.setAttribute('y',302)}
+  if(fs[k])t.style.fontSize=fs[k]+'px';
+  if(k==='REVIEW BEFORE SHIP')t.style.letterSpacing='.04em';
+  if(k==='AI')t.setAttribute('y',241);
+  if(k==='BIN C3 · LOW STOCK')t.setAttribute('y',264.5);
+  if(k==='TOOLROOM SHADOW BOARD')t.setAttribute('y',308);
+ });
+ var h4=sc.querySelector('.hs[data-i="4"]');
+ if(h4){
+  h4.querySelectorAll('rect[height="150"]').forEach(function(r){r.setAttribute('height',170)});
+  var ch=h4.querySelector('rect[width="24"]');if(ch)ch.setAttribute('y',224);
+  var ht4=h4.querySelector('.hit');if(ht4)ht4.setAttribute('height',220);
+ }
+ var bs=sc.querySelector('rect[width="150"][height="16"]');if(bs){bs.setAttribute('y',250);bs.setAttribute('height',20)}
+ var bar=sc.querySelector('path[stroke-width="12"]');if(bar)bar.setAttribute('d','M384 274H464');
+ var cc=sc.querySelector('circle[cx="474"]');if(cc)cc.setAttribute('cy',280);
+ var hr=sc.querySelector('.hint rect'),hp=sc.querySelector('.hint path'),hx=sc.querySelector('.hint text');
+ if(hr&&hp&&hx){hr.setAttribute('width',200);hr.setAttribute('y',2);hr.setAttribute('height',30);hr.setAttribute('rx',15);
+  hp.setAttribute('d','M60 32l6 8 6-8');hx.setAttribute('x',122);hx.setAttribute('y',23);hx.style.fontSize='16px'}
+}
+
+/* ===================== 2. FLIGHT DECK: maintenance + support console ===================== */
+var W=document.getElementById('workbench'),pane=W&&W.querySelector('.pro-pane');
+if(!pane)return;
+var sm=W.querySelector('.pro-nav button small');if(sm)sm.textContent='Maintenance and support';
+
+var Z={
+ avionics:{n:'Avionics bay',l:'',a:'ATA 34',t:5,g:1,
+  line:['Pitot and static ports clear, covers off','Cockpit warnings checked against the MEL','Defects entered in the tech log'],
+  base:['Wiring and connectors inspected for chafing','Instrument function test per task card','Records updated against the task card']},
+ engines:{n:'Engines',a:'ATA 71',t:8,g:1,
+  line:['Inlet and fan blades inspected for damage','Oil level checked, cowl latches secure','No leaks, panels closed'],
+  base:['Borescope inspection recorded','Mounts and fasteners torqued to the manual','Run-up and leak check witnessed']},
+ gear:{n:'Landing gear',a:'ATA 32',t:6,g:1,
+  line:['Tire wear and pressure checked','Brake wear indicators within limits','Strut extension and leaks checked'],
+  base:['Strut and actuators inspected on jacks','Retraction test run per procedure','Fasteners torqued, witness marks applied']},
+ controls:{n:'Flight controls',a:'ATA 27',t:6,g:1,
+  line:['Flaps and slats visually checked','Control surfaces free and secure','Static wicks and hinges intact'],
+  base:['Cable tension and rigging verified','Actuators and tracks lubricated','Full-travel check recorded']},
+ toolroom:{n:'Toolroom',l:'Toolroom',a:'Tool control',t:0,
+  f:'Open the toolroom and count the shadow board',e:'Close out with every tool accounted for',
+  line:['Tools issued and signed out to a named technician','Calibration stickers checked before issue','Returned tools inspected and put back'],
+  base:['Calibration due list reviewed','Tool kits built for each task card','Missing-tool search closed before release']},
+ stores:{n:'Stores and inventory',l:'Stores',a:'Stores',t:0,
+  f:'Receive parts and check them against the packing list',e:'Stock count matches the records',
+  line:['Consumables issued for the turnaround','Shelf life and batch numbers checked','Bin counts updated after issue'],
+  base:['Parts kitted for each task card','Unserviceable parts tagged and quarantined','Low-stock bins flagged for reorder']},
+ records:{n:'Records and documentation',l:'Records',a:'Documentation',t:0,
+  f:'Open the work package',e:'Records reviewed and signed',
+  line:['Defects entered in the tech log','Deferred items logged with their limits','Release paperwork checked for gaps'],
+  base:['Task cards filed in order','Findings and parts used recorded','Work package closed and archived']},
+ cargo:{n:'Cargo and logistics',l:'Cargo',a:'Cargo',t:0,g:1,
+  f:'Check the load plan and cargo weights',e:'Load sheet and manifest agree',
+  line:['Items checked against the air waybill','ULDs loaded and restrained to the plan','Hold doors closed, load sheet completed'],
+  base:['Cargo hold inspected for damage and liners','Restraint fittings and rollers checked','Hold cleared and signed for the next load']},
+ safety:{n:'Safety',l:'Safety',a:'Safety',t:0,
+  f:'Walk the work area before starting',e:'Area safe and handed back',
+  line:['FOD walk of the ramp completed','Chocks, cones and extinguisher in place','Hazards reported and recorded'],
+  base:['Hangar floor clear of FOD and spills','Locked-out power sources verified','PPE and signage checked']}
+};
+var SUP=['toolroom','stores','records','cargo','safety'],
+ IC={toolroom:'<circle cx="40" cy="14" r="6"/><path d="M36 18L16 30"/>',
+  stores:'<rect x="16" y="8" width="30" height="24"/><path d="M16 20H46M31 8V20"/>',
+  records:'<rect x="19" y="8" width="24" height="26"/><path d="M24 17H38M24 23H38M24 29H33"/>',
+  cargo:'<rect x="12" y="12" width="38" height="20"/><path d="M20 12V32M28 12V32M36 12V32M44 12V32"/>',
+  safety:'<path d="M31 6L42 32H20Z"/><path d="M25 22H37"/>'},
+ supSvg=SUP.map(function(k,i){return '<g class="fd-z" data-z="'+k+'" tabindex="0" role="button" aria-label="'+Z[k].n+' task card" transform="translate('+(5+i*70)+' 0)"><rect class="sh" x="0" y="316" width="62" height="50" rx="4"/><g class="ic" transform="translate(0 314)">'+IC[k]+'</g><text x="31" y="360" text-anchor="middle" class="fd-lab">'+Z[k].l.toUpperCase()+'</text></g>'}).join('');
+var NZ=Object.keys(Z).length;
+
+pane.innerHTML=`<div class="cockpit fd" data-m="line" style="padding:14px">
+<div class="fd-bar">
+ <div class="fd-seg" role="group" aria-label="Maintenance type"><button class="on" data-m="line">Line</button><button data-m="base">Base</button></div>
+ <button class="fd-safe" aria-pressed="false">Safe to work: OFF</button>
+ <span class="fd-reg">Demo aircraft</span><button class="fd-btn" id="fdReset">Reset</button>
+</div>
+<div class="fd-grid">
+ <div class="fd-map"><svg id="fdSvg" viewBox="0 0 360 372" role="group" aria-label="Interactive aircraft with support bays. Select a zone to open its task card.">
+  <g class="ex-base"><rect x="8" y="8" width="344" height="284" class="fd-ex"/><text x="16" y="22" class="fd-lab">HANGAR BAY · HEAVY CHECK</text>
+   <path d="M44 214l8 14h-16zM316 214l8 14h-16zM180 268l8 14h-16z" fill="#ffb020"/><text x="58" y="226" class="fd-lab">JACK</text></g>
+  <g class="ex-line"><path d="M8 290H352" class="fd-ex"/><text x="16" y="284" class="fd-lab">RAMP · TURNAROUND</text>
+   <path d="M148 186l-8 8h8zM212 186l8 8h-8z" fill="#ffb020"/><rect x="262" y="92" width="44" height="22" class="fd-ex"/><text x="272" y="106" class="fd-lab">GPU</text><path d="M262 103H202" class="fd-ex"/></g>
+  <path class="body" d="M180 14C196 14 202 40 202 70V250C202 266 192 284 180 290C168 284 158 266 158 250V70C158 40 164 14 180 14Z"/>
+  <path class="body" d="M160 118L40 188V206L160 176ZM200 118L320 188V206L200 176Z"/>
+  <g class="fd-z" data-z="avionics" tabindex="0" role="button" aria-label="Avionics bay task card"><path class="sh" d="M180 18C191 18 197 38 198 60H162C163 38 169 18 180 18Z"/><path d="M170 30H190L188 38H172Z" fill="#7fd6e4"/><text x="204" y="34" class="fd-lab">AVIONICS</text><circle class="fd-pl" cx="180" cy="48" r="8"/></g>
+  <g class="fd-z" data-z="engines" tabindex="0" role="button" aria-label="Engines task card"><rect class="sh" x="74" y="146" width="20" height="44" rx="10"/><rect class="sh" x="266" y="146" width="20" height="44" rx="10"/><text x="20" y="144" class="fd-lab">ENGINES</text><circle class="fd-pl" cx="84" cy="168" r="8"/></g>
+  <g class="fd-z" data-z="gear" tabindex="0" role="button" aria-label="Landing gear task card"><rect class="sh" x="143" y="150" width="12" height="26"/><rect class="sh" x="205" y="150" width="12" height="26"/><rect class="sh" x="174" y="68" width="12" height="16"/><text x="222" y="86" class="fd-lab">GEAR</text><circle class="fd-pl" cx="149" cy="163" r="8"/></g>
+  <g class="fd-z" data-z="controls" tabindex="0" role="button" aria-label="Flight controls task card"><path class="sh" d="M158 170L100 186V192L158 176ZM202 170L260 186V192L202 176Z"/><path class="sh" d="M162 246L112 266V276L162 264ZM198 246L248 266V276L198 264Z"/><text x="214" y="262" class="fd-lab">FLT CTRL</text><circle class="fd-pl" cx="130" cy="181" r="8"/></g>
+  <path d="M8 300H352" class="fd-ex"/><text x="8" y="311" class="fd-lab">SUPPORT WORK AROUND THE AIRCRAFT</text>${supSvg}
+ </svg></div>
+ <div class="fd-card"><div class="fd-h"><b id="fdTitle"></b><span id="fdSub"></span></div><ul class="fd-list" id="fdList"></ul><p class="fd-warn" id="fdWarn"></p><button class="fd-sign" id="fdSign" hidden></button></div>
+</div>
+<div class="fd-log" id="fdLog" aria-live="polite"></div>
+<div class="kp"><div>Tools out<b id="fdT">0</b></div><div>Zones signed<b id="fdZ">0 / ${NZ}</b></div><div>Status<b id="fdS">In work</b></div></div>
+</div>`;
+
+var fd=pane.querySelector('.fd'),svg=pane.querySelector('#fdSvg'),zs=svg.querySelectorAll('.fd-z'),
+ segs=fd.querySelectorAll('.fd-seg button'),safeB=fd.querySelector('.fd-safe'),
+ $=function(i){return pane.querySelector('#'+i)},
+ hT=$('fdTitle'),hS=$('fdSub'),list=$('fdList'),warn=$('fdWarn'),sign=$('fdSign'),logEl=$('fdLog'),kt=$('fdT'),kz=$('fdZ'),ks=$('fdS');
+var mode='line',cur=null,safe=false,n=0,logs=[],S;
+function init(){S={line:{},base:{}};for(var m in S)for(var z in Z)S[m][z]={p:0,s:false};logs=[];n=0}
+function items(z){var o=Z[z];
+ return [o.f||'Issue tools from the toolroom · '+o.t+' logged'].concat(o[mode],[o.e||'Return tools · '+o.t+' of '+o.t+' counted'])}
+function pad(x){return (x<10?'00':x<100?'0':'')+x}
+function hhmm(){return new Date().toTimeString().slice(0,5)}
+function render(){
+ fd.dataset.m=mode;
+ segs.forEach(function(b){b.classList.toggle('on',b.dataset.m===mode)});
+ safeB.setAttribute('aria-pressed',String(safe));safeB.textContent='Safe to work: '+(safe?'ON':'OFF');
+ var out=0,sg=0;
+ zs.forEach(function(g){var z=g.dataset.z,s=S[mode][z],L=items(z).length;
+  g.classList.toggle('sel',z===cur);g.classList.toggle('done',s.s);g.classList.toggle('part',!s.s&&s.p>0);
+  if(s.s)sg++;if(s.p>0&&s.p<L)out+=Z[z].t});
+ kt.textContent=out;kz.textContent=sg+' / '+NZ;ks.textContent=sg===NZ?'Released':'In work';
+ if(!cur){hT.textContent='Pick a zone';hS.textContent='Aircraft or support bay';
+  list.innerHTML='<li class="fd-empty">Switch between line and base work, then open any zone: the aircraft, or the toolroom, stores, records, cargo and safety bays below it. Work each task card in order.</li>';
+  sign.hidden=true;warn.textContent=''}
+ else{var o=Z[cur],s=S[mode][cur],it=items(cur),lock=o.g&&!safe;
+  hT.textContent=o.n;hS.textContent=o.a+' · '+(mode==='line'?'line work':'base work');
+  list.innerHTML=it.map(function(x,i){var d=i<s.p,ok=!lock&&!s.s&&(i===s.p||i===s.p-1);
+   return '<li><button class="fd-it'+(d?' done':i===s.p?' next':'')+'" data-i="'+i+'"'+(ok?'':' disabled')+'><i>'+(d?'✓':'')+'</i><span>'+x+'</span></button></li>'}).join('');
+  sign.hidden=false;sign.disabled=!(s.p===it.length&&!s.s);sign.textContent=s.s?'Task card closed':'Sign off task card';
+  warn.textContent=(lock&&!s.s)?'Set safe to work first: chocks in, pins fitted, power off.':''}
+ logEl.innerHTML=logs.length?logs.map(function(l){return '<div>'+l+'</div>'}).join(''):'<div class="d">Tech log is empty. Sign off a task card to write an entry.</div>';
+}
+function pick(g){cur=g.dataset.z;svg.classList.add('touched');render()}
+zs.forEach(function(g){g.addEventListener('click',function(){pick(g)});g.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();pick(g)}})});
+segs.forEach(function(b){b.addEventListener('click',function(){mode=b.dataset.m;render()})});
+safeB.addEventListener('click',function(){safe=!safe;render()});
+$('fdReset').addEventListener('click',function(){init();cur=null;safe=false;svg.classList.remove('touched');render()});
+list.addEventListener('click',function(e){var b=e.target.closest('.fd-it');if(!b||b.disabled)return;
+ var i=+b.dataset.i,s=S[mode][cur];if(i===s.p)s.p++;else if(i===s.p-1)s.p--;render()});
+sign.addEventListener('click',function(){var s=S[mode][cur],o=Z[cur];if(s.p!==items(cur).length||s.s)return;
+ s.s=true;var M=mode.toUpperCase();
+ logs.unshift('TL-'+pad(++n)+' · '+hhmm()+' · '+M+' · '+o.a+' · '+o.n+' · card closed'+(o.t?' · tools '+o.t+'/'+o.t:''));
+ var all=true;for(var z in Z)if(!S[mode][z].s)all=false;
+ if(all)logs.unshift('TL-'+pad(++n)+' · '+hhmm()+' · '+M+' · RELEASED TO SERVICE');
+ if(logs.length>5)logs.length=5;render()});
+init();render();
+
+/* footer text and chips for the Flight deck tab */
+var ft=document.getElementById('proText'),fc=document.getElementById('proChips'),b0=W.querySelector('.pro-nav button');
+function foot(){if(!ft||!fc)return;
+ ft.textContent='My degree and maintenance OJT cover the whole job around an aircraft: line and base work, tool control, stores, records, cargo and safety. Read the checklist, verify, then sign off.';
+ fc.innerHTML=['Line maintenance','Base maintenance','Tool control','Stores and inventory','Records','Cargo and logistics','Safety'].map(function(x){return '<li>'+x+'</li>'}).join('')}
+foot();if(b0)b0.addEventListener('click',foot);
+})();
+</script>
+<!-- ===== END ADD-ON V4 PATCH ===== -->
 </body>
 </html>
